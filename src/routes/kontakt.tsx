@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 
@@ -24,7 +24,7 @@ function K() {
               <div><div className="text-xs text-muted-foreground">E-mail</div><div className="font-medium">edumila.kontakt@gmail.com</div></div>
             </a>
             <a href="https://instagram.com/korepetycje_edumila" target="_blank" rel="noreferrer" className="card-surface p-5 flex items-center gap-4 hover:bg-surface-2 transition">
-              <div className="w-11 h-11 rounded-xl bg-student-soft text-student flex items-center justify-center"><Instagram size={18}/></div>
+              <div className="w-11 h-11 rounded-xl bg-student-soft text-student flex items-center justify-center"><AtSign size={18}/></div>
               <div><div className="text-xs text-muted-foreground">Instagram</div><div className="font-medium">@korepetycje_edumila</div></div>
             </a>
             <div className="card-surface p-5 flex items-center gap-4">
