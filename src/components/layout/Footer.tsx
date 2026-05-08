@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Phone } from "lucide-react";
+import { AtSign, Mail, Phone } from "lucide-react";
 
 export function Footer() {
   return (
@@ -28,7 +28,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2"><Phone size={14} /> 667 541 916</li>
             <li className="flex items-center gap-2"><Mail size={14} /> edumila.kontakt@gmail.com</li>
-            <li className="flex items-center gap-2"><Instagram size={14} /> @korepetycje_edumila</li>
+            <li className="flex items-center gap-2"><AtSign size={14} /> @korepetycje_edumila</li>
           </ul>
         </div>
       </div>
