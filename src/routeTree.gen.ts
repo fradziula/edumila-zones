@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UczenRouteImport } from './routes/uczen'
 import { Route as RodzicRouteImport } from './routes/rodzic'
+import { Route as KarolinaRouteImport } from './routes/karolina'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UczenIndexRouteImport } from './routes/uczen.index'
 import { Route as RodzicIndexRouteImport } from './routes/rodzic.index'
@@ -33,6 +34,11 @@ const UczenRoute = UczenRouteImport.update({
 const RodzicRoute = RodzicRouteImport.update({
   id: '/rodzic',
   path: '/rodzic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KarolinaRoute = KarolinaRouteImport.update({
+  id: '/karolina',
+  path: '/karolina',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -103,6 +109,7 @@ const RodzicCennikRoute = RodzicCennikRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/karolina': typeof KarolinaRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/rodzic/cennik': typeof RodzicCennikRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/karolina': typeof KarolinaRoute
   '/rodzic/cennik': typeof RodzicCennikRoute
   '/rodzic/oferta': typeof RodzicOfertaRoute
   '/rodzic/opinie': typeof RodzicOpinieRoute
@@ -136,6 +144,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/karolina': typeof KarolinaRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/rodzic/cennik': typeof RodzicCennikRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/karolina'
     | '/rodzic'
     | '/uczen'
     | '/rodzic/cennik'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/karolina'
     | '/rodzic/cennik'
     | '/rodzic/oferta'
     | '/rodzic/opinie'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/karolina'
     | '/rodzic'
     | '/uczen'
     | '/rodzic/cennik'
@@ -205,6 +217,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KarolinaRoute: typeof KarolinaRoute
   RodzicRoute: typeof RodzicRouteWithChildren
   UczenRoute: typeof UczenRouteWithChildren
 }
@@ -223,6 +236,13 @@ declare module '@tanstack/react-router' {
       path: '/rodzic'
       fullPath: '/rodzic'
       preLoaderRoute: typeof RodzicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/karolina': {
+      id: '/karolina'
+      path: '/karolina'
+      fullPath: '/karolina'
+      preLoaderRoute: typeof KarolinaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -362,6 +382,7 @@ const UczenRouteWithChildren = UczenRoute._addFileChildren(UczenRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KarolinaRoute: KarolinaRoute,
   RodzicRoute: RodzicRouteWithChildren,
   UczenRoute: UczenRouteWithChildren,
 }
