@@ -9,38 +9,328 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WszystkoRouteImport } from './routes/wszystko'
+import { Route as UczenRouteImport } from './routes/uczen'
+import { Route as RodzicRouteImport } from './routes/rodzic'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as KarolinaRouteImport } from './routes/karolina'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UczenIndexRouteImport } from './routes/uczen.index'
+import { Route as RodzicIndexRouteImport } from './routes/rodzic.index'
+import { Route as KarolinaIndexRouteImport } from './routes/karolina.index'
+import { Route as UczenPytaniaRouteImport } from './routes/uczen.pytania'
+import { Route as UczenOpinieRouteImport } from './routes/uczen.opinie'
+import { Route as UczenNarzedziaRouteImport } from './routes/uczen.narzedzia'
+import { Route as UczenJakToDzialaRouteImport } from './routes/uczen.jak-to-dziala'
+import { Route as UczenDialogRouteImport } from './routes/uczen.dialog'
+import { Route as RodzicWsparcieRouteImport } from './routes/rodzic.wsparcie'
+import { Route as RodzicRegulaminRouteImport } from './routes/rodzic.regulamin'
+import { Route as RodzicOpinieRouteImport } from './routes/rodzic.opinie'
+import { Route as RodzicOfertaRouteImport } from './routes/rodzic.oferta'
+import { Route as RodzicCennikRouteImport } from './routes/rodzic.cennik'
+import { Route as KarolinaMetodaRouteImport } from './routes/karolina.metoda'
+import { Route as KarolinaHistoriaRouteImport } from './routes/karolina.historia'
+import { Route as KarolinaDorobekRouteImport } from './routes/karolina.dorobek'
 
+const WszystkoRoute = WszystkoRouteImport.update({
+  id: '/wszystko',
+  path: '/wszystko',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UczenRoute = UczenRouteImport.update({
+  id: '/uczen',
+  path: '/uczen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RodzicRoute = RodzicRouteImport.update({
+  id: '/rodzic',
+  path: '/rodzic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KarolinaRoute = KarolinaRouteImport.update({
+  id: '/karolina',
+  path: '/karolina',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UczenIndexRoute = UczenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UczenRoute,
+} as any)
+const RodzicIndexRoute = RodzicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const KarolinaIndexRoute = KarolinaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KarolinaRoute,
+} as any)
+const UczenPytaniaRoute = UczenPytaniaRouteImport.update({
+  id: '/pytania',
+  path: '/pytania',
+  getParentRoute: () => UczenRoute,
+} as any)
+const UczenOpinieRoute = UczenOpinieRouteImport.update({
+  id: '/opinie',
+  path: '/opinie',
+  getParentRoute: () => UczenRoute,
+} as any)
+const UczenNarzedziaRoute = UczenNarzedziaRouteImport.update({
+  id: '/narzedzia',
+  path: '/narzedzia',
+  getParentRoute: () => UczenRoute,
+} as any)
+const UczenJakToDzialaRoute = UczenJakToDzialaRouteImport.update({
+  id: '/jak-to-dziala',
+  path: '/jak-to-dziala',
+  getParentRoute: () => UczenRoute,
+} as any)
+const UczenDialogRoute = UczenDialogRouteImport.update({
+  id: '/dialog',
+  path: '/dialog',
+  getParentRoute: () => UczenRoute,
+} as any)
+const RodzicWsparcieRoute = RodzicWsparcieRouteImport.update({
+  id: '/wsparcie',
+  path: '/wsparcie',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const RodzicRegulaminRoute = RodzicRegulaminRouteImport.update({
+  id: '/regulamin',
+  path: '/regulamin',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const RodzicOpinieRoute = RodzicOpinieRouteImport.update({
+  id: '/opinie',
+  path: '/opinie',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const RodzicOfertaRoute = RodzicOfertaRouteImport.update({
+  id: '/oferta',
+  path: '/oferta',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const RodzicCennikRoute = RodzicCennikRouteImport.update({
+  id: '/cennik',
+  path: '/cennik',
+  getParentRoute: () => RodzicRoute,
+} as any)
+const KarolinaMetodaRoute = KarolinaMetodaRouteImport.update({
+  id: '/metoda',
+  path: '/metoda',
+  getParentRoute: () => KarolinaRoute,
+} as any)
+const KarolinaHistoriaRoute = KarolinaHistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => KarolinaRoute,
+} as any)
+const KarolinaDorobekRoute = KarolinaDorobekRouteImport.update({
+  id: '/dorobek',
+  path: '/dorobek',
+  getParentRoute: () => KarolinaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/karolina': typeof KarolinaRouteWithChildren
+  '/kontakt': typeof KontaktRoute
+  '/rodzic': typeof RodzicRouteWithChildren
+  '/uczen': typeof UczenRouteWithChildren
+  '/wszystko': typeof WszystkoRoute
+  '/karolina/dorobek': typeof KarolinaDorobekRoute
+  '/karolina/historia': typeof KarolinaHistoriaRoute
+  '/karolina/metoda': typeof KarolinaMetodaRoute
+  '/rodzic/cennik': typeof RodzicCennikRoute
+  '/rodzic/oferta': typeof RodzicOfertaRoute
+  '/rodzic/opinie': typeof RodzicOpinieRoute
+  '/rodzic/regulamin': typeof RodzicRegulaminRoute
+  '/rodzic/wsparcie': typeof RodzicWsparcieRoute
+  '/uczen/dialog': typeof UczenDialogRoute
+  '/uczen/jak-to-dziala': typeof UczenJakToDzialaRoute
+  '/uczen/narzedzia': typeof UczenNarzedziaRoute
+  '/uczen/opinie': typeof UczenOpinieRoute
+  '/uczen/pytania': typeof UczenPytaniaRoute
+  '/karolina/': typeof KarolinaIndexRoute
+  '/rodzic/': typeof RodzicIndexRoute
+  '/uczen/': typeof UczenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kontakt': typeof KontaktRoute
+  '/wszystko': typeof WszystkoRoute
+  '/karolina/dorobek': typeof KarolinaDorobekRoute
+  '/karolina/historia': typeof KarolinaHistoriaRoute
+  '/karolina/metoda': typeof KarolinaMetodaRoute
+  '/rodzic/cennik': typeof RodzicCennikRoute
+  '/rodzic/oferta': typeof RodzicOfertaRoute
+  '/rodzic/opinie': typeof RodzicOpinieRoute
+  '/rodzic/regulamin': typeof RodzicRegulaminRoute
+  '/rodzic/wsparcie': typeof RodzicWsparcieRoute
+  '/uczen/dialog': typeof UczenDialogRoute
+  '/uczen/jak-to-dziala': typeof UczenJakToDzialaRoute
+  '/uczen/narzedzia': typeof UczenNarzedziaRoute
+  '/uczen/opinie': typeof UczenOpinieRoute
+  '/uczen/pytania': typeof UczenPytaniaRoute
+  '/karolina': typeof KarolinaIndexRoute
+  '/rodzic': typeof RodzicIndexRoute
+  '/uczen': typeof UczenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/karolina': typeof KarolinaRouteWithChildren
+  '/kontakt': typeof KontaktRoute
+  '/rodzic': typeof RodzicRouteWithChildren
+  '/uczen': typeof UczenRouteWithChildren
+  '/wszystko': typeof WszystkoRoute
+  '/karolina/dorobek': typeof KarolinaDorobekRoute
+  '/karolina/historia': typeof KarolinaHistoriaRoute
+  '/karolina/metoda': typeof KarolinaMetodaRoute
+  '/rodzic/cennik': typeof RodzicCennikRoute
+  '/rodzic/oferta': typeof RodzicOfertaRoute
+  '/rodzic/opinie': typeof RodzicOpinieRoute
+  '/rodzic/regulamin': typeof RodzicRegulaminRoute
+  '/rodzic/wsparcie': typeof RodzicWsparcieRoute
+  '/uczen/dialog': typeof UczenDialogRoute
+  '/uczen/jak-to-dziala': typeof UczenJakToDzialaRoute
+  '/uczen/narzedzia': typeof UczenNarzedziaRoute
+  '/uczen/opinie': typeof UczenOpinieRoute
+  '/uczen/pytania': typeof UczenPytaniaRoute
+  '/karolina/': typeof KarolinaIndexRoute
+  '/rodzic/': typeof RodzicIndexRoute
+  '/uczen/': typeof UczenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/karolina'
+    | '/kontakt'
+    | '/rodzic'
+    | '/uczen'
+    | '/wszystko'
+    | '/karolina/dorobek'
+    | '/karolina/historia'
+    | '/karolina/metoda'
+    | '/rodzic/cennik'
+    | '/rodzic/oferta'
+    | '/rodzic/opinie'
+    | '/rodzic/regulamin'
+    | '/rodzic/wsparcie'
+    | '/uczen/dialog'
+    | '/uczen/jak-to-dziala'
+    | '/uczen/narzedzia'
+    | '/uczen/opinie'
+    | '/uczen/pytania'
+    | '/karolina/'
+    | '/rodzic/'
+    | '/uczen/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/kontakt'
+    | '/wszystko'
+    | '/karolina/dorobek'
+    | '/karolina/historia'
+    | '/karolina/metoda'
+    | '/rodzic/cennik'
+    | '/rodzic/oferta'
+    | '/rodzic/opinie'
+    | '/rodzic/regulamin'
+    | '/rodzic/wsparcie'
+    | '/uczen/dialog'
+    | '/uczen/jak-to-dziala'
+    | '/uczen/narzedzia'
+    | '/uczen/opinie'
+    | '/uczen/pytania'
+    | '/karolina'
+    | '/rodzic'
+    | '/uczen'
+  id:
+    | '__root__'
+    | '/'
+    | '/karolina'
+    | '/kontakt'
+    | '/rodzic'
+    | '/uczen'
+    | '/wszystko'
+    | '/karolina/dorobek'
+    | '/karolina/historia'
+    | '/karolina/metoda'
+    | '/rodzic/cennik'
+    | '/rodzic/oferta'
+    | '/rodzic/opinie'
+    | '/rodzic/regulamin'
+    | '/rodzic/wsparcie'
+    | '/uczen/dialog'
+    | '/uczen/jak-to-dziala'
+    | '/uczen/narzedzia'
+    | '/uczen/opinie'
+    | '/uczen/pytania'
+    | '/karolina/'
+    | '/rodzic/'
+    | '/uczen/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KarolinaRoute: typeof KarolinaRouteWithChildren
+  KontaktRoute: typeof KontaktRoute
+  RodzicRoute: typeof RodzicRouteWithChildren
+  UczenRoute: typeof UczenRouteWithChildren
+  WszystkoRoute: typeof WszystkoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wszystko': {
+      id: '/wszystko'
+      path: '/wszystko'
+      fullPath: '/wszystko'
+      preLoaderRoute: typeof WszystkoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/uczen': {
+      id: '/uczen'
+      path: '/uczen'
+      fullPath: '/uczen'
+      preLoaderRoute: typeof UczenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rodzic': {
+      id: '/rodzic'
+      path: '/rodzic'
+      fullPath: '/rodzic'
+      preLoaderRoute: typeof RodzicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/karolina': {
+      id: '/karolina'
+      path: '/karolina'
+      fullPath: '/karolina'
+      preLoaderRoute: typeof KarolinaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +338,187 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/uczen/': {
+      id: '/uczen/'
+      path: '/'
+      fullPath: '/uczen/'
+      preLoaderRoute: typeof UczenIndexRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/rodzic/': {
+      id: '/rodzic/'
+      path: '/'
+      fullPath: '/rodzic/'
+      preLoaderRoute: typeof RodzicIndexRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/karolina/': {
+      id: '/karolina/'
+      path: '/'
+      fullPath: '/karolina/'
+      preLoaderRoute: typeof KarolinaIndexRouteImport
+      parentRoute: typeof KarolinaRoute
+    }
+    '/uczen/pytania': {
+      id: '/uczen/pytania'
+      path: '/pytania'
+      fullPath: '/uczen/pytania'
+      preLoaderRoute: typeof UczenPytaniaRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/uczen/opinie': {
+      id: '/uczen/opinie'
+      path: '/opinie'
+      fullPath: '/uczen/opinie'
+      preLoaderRoute: typeof UczenOpinieRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/uczen/narzedzia': {
+      id: '/uczen/narzedzia'
+      path: '/narzedzia'
+      fullPath: '/uczen/narzedzia'
+      preLoaderRoute: typeof UczenNarzedziaRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/uczen/jak-to-dziala': {
+      id: '/uczen/jak-to-dziala'
+      path: '/jak-to-dziala'
+      fullPath: '/uczen/jak-to-dziala'
+      preLoaderRoute: typeof UczenJakToDzialaRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/uczen/dialog': {
+      id: '/uczen/dialog'
+      path: '/dialog'
+      fullPath: '/uczen/dialog'
+      preLoaderRoute: typeof UczenDialogRouteImport
+      parentRoute: typeof UczenRoute
+    }
+    '/rodzic/wsparcie': {
+      id: '/rodzic/wsparcie'
+      path: '/wsparcie'
+      fullPath: '/rodzic/wsparcie'
+      preLoaderRoute: typeof RodzicWsparcieRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/rodzic/regulamin': {
+      id: '/rodzic/regulamin'
+      path: '/regulamin'
+      fullPath: '/rodzic/regulamin'
+      preLoaderRoute: typeof RodzicRegulaminRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/rodzic/opinie': {
+      id: '/rodzic/opinie'
+      path: '/opinie'
+      fullPath: '/rodzic/opinie'
+      preLoaderRoute: typeof RodzicOpinieRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/rodzic/oferta': {
+      id: '/rodzic/oferta'
+      path: '/oferta'
+      fullPath: '/rodzic/oferta'
+      preLoaderRoute: typeof RodzicOfertaRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/rodzic/cennik': {
+      id: '/rodzic/cennik'
+      path: '/cennik'
+      fullPath: '/rodzic/cennik'
+      preLoaderRoute: typeof RodzicCennikRouteImport
+      parentRoute: typeof RodzicRoute
+    }
+    '/karolina/metoda': {
+      id: '/karolina/metoda'
+      path: '/metoda'
+      fullPath: '/karolina/metoda'
+      preLoaderRoute: typeof KarolinaMetodaRouteImport
+      parentRoute: typeof KarolinaRoute
+    }
+    '/karolina/historia': {
+      id: '/karolina/historia'
+      path: '/historia'
+      fullPath: '/karolina/historia'
+      preLoaderRoute: typeof KarolinaHistoriaRouteImport
+      parentRoute: typeof KarolinaRoute
+    }
+    '/karolina/dorobek': {
+      id: '/karolina/dorobek'
+      path: '/dorobek'
+      fullPath: '/karolina/dorobek'
+      preLoaderRoute: typeof KarolinaDorobekRouteImport
+      parentRoute: typeof KarolinaRoute
+    }
   }
 }
 
+interface KarolinaRouteChildren {
+  KarolinaDorobekRoute: typeof KarolinaDorobekRoute
+  KarolinaHistoriaRoute: typeof KarolinaHistoriaRoute
+  KarolinaMetodaRoute: typeof KarolinaMetodaRoute
+  KarolinaIndexRoute: typeof KarolinaIndexRoute
+}
+
+const KarolinaRouteChildren: KarolinaRouteChildren = {
+  KarolinaDorobekRoute: KarolinaDorobekRoute,
+  KarolinaHistoriaRoute: KarolinaHistoriaRoute,
+  KarolinaMetodaRoute: KarolinaMetodaRoute,
+  KarolinaIndexRoute: KarolinaIndexRoute,
+}
+
+const KarolinaRouteWithChildren = KarolinaRoute._addFileChildren(
+  KarolinaRouteChildren,
+)
+
+interface RodzicRouteChildren {
+  RodzicCennikRoute: typeof RodzicCennikRoute
+  RodzicOfertaRoute: typeof RodzicOfertaRoute
+  RodzicOpinieRoute: typeof RodzicOpinieRoute
+  RodzicRegulaminRoute: typeof RodzicRegulaminRoute
+  RodzicWsparcieRoute: typeof RodzicWsparcieRoute
+  RodzicIndexRoute: typeof RodzicIndexRoute
+}
+
+const RodzicRouteChildren: RodzicRouteChildren = {
+  RodzicCennikRoute: RodzicCennikRoute,
+  RodzicOfertaRoute: RodzicOfertaRoute,
+  RodzicOpinieRoute: RodzicOpinieRoute,
+  RodzicRegulaminRoute: RodzicRegulaminRoute,
+  RodzicWsparcieRoute: RodzicWsparcieRoute,
+  RodzicIndexRoute: RodzicIndexRoute,
+}
+
+const RodzicRouteWithChildren =
+  RodzicRoute._addFileChildren(RodzicRouteChildren)
+
+interface UczenRouteChildren {
+  UczenDialogRoute: typeof UczenDialogRoute
+  UczenJakToDzialaRoute: typeof UczenJakToDzialaRoute
+  UczenNarzedziaRoute: typeof UczenNarzedziaRoute
+  UczenOpinieRoute: typeof UczenOpinieRoute
+  UczenPytaniaRoute: typeof UczenPytaniaRoute
+  UczenIndexRoute: typeof UczenIndexRoute
+}
+
+const UczenRouteChildren: UczenRouteChildren = {
+  UczenDialogRoute: UczenDialogRoute,
+  UczenJakToDzialaRoute: UczenJakToDzialaRoute,
+  UczenNarzedziaRoute: UczenNarzedziaRoute,
+  UczenOpinieRoute: UczenOpinieRoute,
+  UczenPytaniaRoute: UczenPytaniaRoute,
+  UczenIndexRoute: UczenIndexRoute,
+}
+
+const UczenRouteWithChildren = UczenRoute._addFileChildren(UczenRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KarolinaRoute: KarolinaRouteWithChildren,
+  KontaktRoute: KontaktRoute,
+  RodzicRoute: RodzicRouteWithChildren,
+  UczenRoute: UczenRouteWithChildren,
+  WszystkoRoute: WszystkoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
