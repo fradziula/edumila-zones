@@ -2,6 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, GraduationCap, Heart, Sparkles } from "lucide-react";
 import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
 import karolinaPhoto from "@/assets/karolina.jpeg";
+import kubek1 from "@/assets/kubek-1.jpeg";
+import kubek2 from "@/assets/kubek-2.jpeg";
+import kubek3 from "@/assets/kubek-3.jpeg";
+import kubek4 from "@/assets/kubek-4.jpeg";
 import { ReviewCard } from "@/components/ReviewCard";
 import { Section } from "@/components/Section";
 
@@ -199,14 +203,25 @@ function Home() {
       {/* EDU MILA W REALU */}
       <Section eyebrow="Drobiazgi" title="EduMila w realu" subtitle="Coś od nas — kubki EduMila. Drobiazgi, które trafiają do uczniów po dłuższej współpracy.">
         <div className="grid gap-5 sm:grid-cols-2">
-          {[1, 2, 3, 4].map((n) => (
-            <PhotoPlaceholder
-              key={n}
-              label={`TUTAJ WSTAW ZDJĘCIE KUBKA ${n}`}
-              caption={`Kubek EduMila — ujęcie ${n}`}
-              aspect="aspect-[4/3]"
-              tone={n % 2 ? "karolina" : "default"}
-            />
+          {[
+            { src: kubek1, n: 1 },
+            { src: kubek2, n: 2 },
+            { src: kubek3, n: 3 },
+            { src: kubek4, n: 4 },
+          ].map(({ src, n }) => (
+            <figure key={n} className="w-full">
+              <div className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2">
+                <img
+                  src={src}
+                  alt={`Kubek EduMila — ujęcie ${n}`}
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm text-muted-foreground text-center">
+                Kubek EduMila — ujęcie {n}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </Section>
