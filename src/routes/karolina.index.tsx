@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import karolinaPhoto from "@/assets/karolina.jpeg";
 
 export const Route = createFileRoute("/karolina/")({
   head: () => ({ meta: [{ title: "Karolina — EduMila" }] }),
@@ -26,7 +26,17 @@ function KHome() {
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-center">
-          <PhotoPlaceholder label="TUTAJ WSTAW ZDJĘCIE KOREPETYTORKI" caption="Karolina — EduMila" tone="karolina" />
+          <figure className="w-full">
+            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-karolina/40 bg-surface">
+              <img
+                src={karolinaPhoto}
+                alt="Karolina — korepetytorka EduMila"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <figcaption className="mt-3 text-sm text-muted-foreground text-center">Karolina — EduMila</figcaption>
+          </figure>
           <div>
             <p className="font-hand text-3xl text-karolina">„Nauka to czary, które naprawdę działają.”</p>
             <p className="mt-5 text-muted-foreground leading-relaxed">
