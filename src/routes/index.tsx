@@ -49,9 +49,63 @@ function Home() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div
+          aria-hidden
           className="absolute inset-0 -z-10 opacity-90"
           style={{ background: "var(--gradient-hero)" }}
         />
+        {/* Math grid */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.14]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, oklch(0.96 0.01 250 / 0.6) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.96 0.01 250 / 0.6) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage: "radial-gradient(ellipse at center, black 35%, transparent 85%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, black 35%, transparent 85%)",
+          }}
+        />
+        {/* Math motifs */}
+        <svg
+          aria-hidden
+          className="absolute inset-0 -z-10 w-full h-full text-foreground opacity-[0.18]"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          <g stroke="currentColor" strokeWidth="1" fill="none">
+            <circle cx="8%" cy="22%" r="70" />
+            <circle cx="92%" cy="78%" r="110" strokeDasharray="3 6" />
+            <circle cx="60%" cy="12%" r="36" />
+            <polygon points="120,520 200,640 40,640" />
+            <rect x="78%" y="18%" width="90" height="90" transform="rotate(18 0 0)" />
+            <path d="M 0 70% Q 25% 30%, 50% 55% T 100% 35%" strokeDasharray="2 6" />
+            <line x1="0" y1="50%" x2="100%" y2="50%" strokeDasharray="1 10" />
+            <line x1="50%" y1="0" x2="50%" y2="100%" strokeDasharray="1 10" />
+            <line x1="0" y1="0" x2="100%" y2="100%" strokeDasharray="2 12" />
+          </g>
+          <g fill="currentColor" fontFamily="var(--font-display)" opacity="0.55">
+            <text x="6%" y="38%" fontSize="26">∫ f(x) dx</text>
+            <text x="82%" y="28%" fontSize="34">π</text>
+            <text x="70%" y="90%" fontSize="22">a² + b² = c²</text>
+            <text x="18%" y="86%" fontSize="32">∑</text>
+            <text x="44%" y="20%" fontSize="22">√x</text>
+            <text x="92%" y="55%" fontSize="28">∞</text>
+            <text x="32%" y="55%" fontSize="20">f(x) = ax + b</text>
+            <text x="10%" y="62%" fontSize="20">θ</text>
+            <text x="86%" y="40%" fontSize="20">Δ</text>
+          </g>
+          <g fill="currentColor" opacity="0.5">
+            <circle cx="15%" cy="48%" r="2" />
+            <circle cx="35%" cy="72%" r="2" />
+            <circle cx="68%" cy="42%" r="2" />
+            <circle cx="80%" cy="65%" r="2" />
+            <circle cx="50%" cy="30%" r="2" />
+          </g>
+        </svg>
+        {/* Subtle glow accents */}
+        <div aria-hidden className="absolute -z-10 top-10 left-1/4 w-[420px] h-[420px] rounded-full bg-student/10 blur-3xl" />
+        <div aria-hidden className="absolute -z-10 bottom-0 right-10 w-[480px] h-[480px] rounded-full bg-karolina/10 blur-3xl" />
         <div className="container-page pt-16 md:pt-24 pb-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface/60 backdrop-blur text-xs text-muted-foreground">
