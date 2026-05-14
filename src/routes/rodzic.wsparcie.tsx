@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { GiftPackageSelect, formatGiftDisplay, type GiftPackage } from "@/components/GiftPackageSelect";
 
 export const Route = createFileRoute("/rodzic/wsparcie")({
   head: () => ({
@@ -22,13 +23,6 @@ const ambasadorzy = [
 
 // Pakiety prezentowe. Do Stripe wysyłamy WYŁĄCZNIE `packageId`;
 // backend mapuje go na Stripe Price ID i weryfikuje cenę.
-type GiftPackage = {
-  packageId: string;
-  lessonsCount: number;
-  pricePln: number;
-  displayName: string;
-};
-
 const giftPackages: GiftPackage[] = [
   { packageId: "gift-1-lessons", lessonsCount: 1, pricePln: 80, displayName: "1 lekcja — 80 zł" },
   { packageId: "gift-2-lessons", lessonsCount: 2, pricePln: 156, displayName: "2 lekcje — 156 zł" },
