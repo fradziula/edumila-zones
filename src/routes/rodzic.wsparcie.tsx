@@ -108,43 +108,18 @@ function Prezent() {
               Wybierz pakiet prezentowy. Cena zostanie przypisana automatycznie do wybranego pakietu.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {giftPackages.map((p) => {
-                const active = selectedPackageId === p.packageId;
-                return (
-                  <label
-                    key={p.packageId}
-                    className={`cursor-pointer rounded-xl border px-4 py-3 transition select-none ${
-                      active
-                        ? "border-parent bg-parent/10 ring-2 ring-parent/40"
-                        : "border-border bg-input/40 hover:bg-input/70"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="giftPackage"
-                      value={p.packageId}
-                      checked={active}
-                      onChange={() => {
-                        setSelectedPackageId(p.packageId);
-                        setError(null);
-                      }}
-                      className="sr-only"
-                    />
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="font-display text-lg font-semibold">
-                        {p.lessonsCount} {p.lessonsCount === 1 ? "lekcja" : "lekcji"}
-                      </span>
-                      <span className="text-base font-semibold">{p.pricePln} zł</span>
-                    </div>
-                  </label>
-                );
-              })}
-            </div>
+            <GiftPackageSelect
+              packages={giftPackages}
+              value={selectedPackageId}
+              onChange={(id) => {
+                setSelectedPackageId(id);
+                setError(null);
+              }}
+            />
 
             {selected && (
               <p className="mt-3 text-sm text-foreground/80">
-                Wybrany pakiet: <span className="font-semibold">{selected.displayName}</span>
+                Wybrany pakiet: <span className="font-semibold">{formatGiftDisplay(selected)}</span>
               </p>
             )}
             {error && (
