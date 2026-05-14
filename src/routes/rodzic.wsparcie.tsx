@@ -16,7 +16,7 @@ const ambasadorzy = [
   "Wujek",
   "Ciocia",
   "Rodzina",
-  "Ludzie dobrzy wspierający naukę",
+  "Ludzie dobrej woli wspierający naukę",
 ];
 
 const packs = [
