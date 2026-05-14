@@ -130,7 +130,7 @@ function Home() {
                 to="/rodzic/cennik"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border hover:bg-surface transition"
               >
-                Zobacz cennik
+                Cennik
               </Link>
             </div>
             <p className="mt-6 font-hand text-2xl text-muted-foreground">
