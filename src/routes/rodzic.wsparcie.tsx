@@ -1,68 +1,97 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Gift, Heart } from "lucide-react";
-import { PageHero } from "@/components/PageHero";
-import { Section } from "@/components/Section";
 
 export const Route = createFileRoute("/rodzic/wsparcie")({
-  head: () => ({ meta: [{ title: "Sponsoruj lekcje — EduMila" }, { name: "description", content: "Strona dla babć, dziadków i bliskich, którzy chcą wesprzeć naukę dziecka." }] }),
-  component: Wsp,
+  head: () => ({
+    meta: [
+      { title: "Prezent — Sponsoruj lekcje | EduMila" },
+      { name: "description", content: "Zapewnij lekcję uczniowi. Prezent od babci, dziadka, cioci lub wujka." },
+    ],
+  }),
+  component: Prezent,
 });
 
-const packs = [
-  { t: "1 lekcja", price: "80 zł", d: "Drobny gest. Pierwsza lekcja jako prezent." },
-  { t: "4 lekcje", price: "304 zł", d: "Cały miesiąc spokojnej nauki.", featured: true },
-  { t: "16 lekcji", price: "1 088 zł", d: "Maturalny finisz lub solidny semestr." },
+const ambasadorzy = [
+  "Babcia",
+  "Dziadek",
+  "Wujek",
+  "Ciocia",
+  "Rodzina",
+  "Ludzie dobrzy wspierający naukę",
 ];
 
-function Wsp() {
+const packs = [
+  { t: "1 lekcja", price: "80 zł" },
+  { t: "4 lekcje", price: "304 zł" },
+  { t: "16 lekcji", price: "1 088 zł" },
+];
+
+function Prezent() {
   return (
-    <>
-      <PageHero
-        eyebrow="Sponsoruj lekcje"
-        tone="parent"
-        title={<>Najpiękniejszy prezent? <span className="text-parent">Spokój przy nauce.</span></>}
-        subtitle="Strona dla babć, dziadków, cioć i wujków. Możesz podarować dziecku konkretne lekcje, nie kolejną zabawkę."
-      />
-      <Section title="Wybierz pakiet">
-        <div className="grid gap-5 md:grid-cols-3">
-          {packs.map((p) => (
-            <div key={p.t} className={`card-surface p-7 relative ${p.featured ? "ring-1 ring-parent/50 glow-parent" : ""}`}>
-              {p.featured && <span className="absolute -top-3 left-6 text-xs px-3 py-1 rounded-full bg-parent text-background font-medium">Najpopularniejszy</span>}
-              <Gift className="text-parent mb-4" />
-              <div className="font-display text-xl font-semibold">{p.t}</div>
-              <div className="mt-2 text-3xl font-semibold">{p.price}</div>
-              <p className="mt-3 text-sm text-muted-foreground">{p.d}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-      <Section title="Dane do prezentu">
-        <form className="card-surface p-7 grid gap-4 md:grid-cols-2 max-w-3xl" onSubmit={(e) => e.preventDefault()}>
-          <Field label="Twoje imię" />
-          <Field label="Twój e-mail" type="email" />
-          <Field label="Imię ucznia" />
-          <Field label="Krótka dedykacja (opcjonalnie)" />
-          <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3 pt-2">
-            <p className="text-xs text-muted-foreground inline-flex items-center gap-2"><Heart size={14}/> Płatność uruchomimy w kolejnym kroku.</p>
-            <button className="px-5 py-3 rounded-full bg-parent text-background font-medium">Przejdź do płatności</button>
+    <section className="container-page py-20 md:py-28">
+      <header className="text-center max-w-3xl mx-auto">
+        <h1 className="font-display font-semibold leading-[0.95] tracking-tight text-7xl md:text-9xl">
+          Prezent
+        </h1>
+        <p className="mt-6 text-lg md:text-xl text-muted-foreground">
+          Zapewnij Lekcję Uczniowi
+        </p>
+      </header>
+
+      <div className="mt-20 md:mt-28 grid gap-12 md:gap-16 lg:grid-cols-[1fr_minmax(0,420px)] items-start">
+        <div>
+          <h2 className="font-display text-2xl md:text-3xl font-semibold text-parent">
+            Ambasadorzy Nauki
+          </h2>
+          <ul className="mt-8 space-y-4 text-lg md:text-xl text-foreground/90">
+            {ambasadorzy.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+
+          <div className="mt-12 space-y-3 max-w-sm">
+            {packs.map((p) => (
+              <div key={p.t} className="flex items-baseline justify-between border-b border-border/60 py-2">
+                <span className="text-sm text-muted-foreground">{p.t}</span>
+                <span className="font-display text-xl font-semibold">{p.price}</span>
+              </div>
+            ))}
           </div>
-        </form>
-      </Section>
-      <Section>
-        <div className="card-surface p-8 max-w-3xl">
-          <p className="font-hand text-2xl text-parent">„Babciu, dziadku — najlepszy prezent to spokojna głowa przed sprawdzianem.”</p>
-          <p className="mt-3 text-sm text-muted-foreground">Po opłaceniu prześlemy uczniowi prosty bon i ustalimy terminy lekcji.</p>
         </div>
-      </Section>
-    </>
+
+        <form
+          className="card-surface p-8 md:p-10 flex flex-col gap-6 w-full"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <h2 className="font-display text-3xl md:text-4xl font-semibold">Formularz</h2>
+
+          <div className="flex flex-col gap-5 mt-2">
+            <Field label="imie ucznia" />
+            <Field label="Numer telefonu" type="tel" />
+            <Field label="adres email" type="email" />
+          </div>
+
+          <button
+            type="submit"
+            className="mt-4 w-full px-6 py-4 rounded-full bg-parent text-background font-display text-xl font-semibold hover:bg-parent/90 transition"
+          >
+            Zapłać
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
 
 function Field({ label, type = "text" }: { label: string; type?: string }) {
   return (
     <label className="text-sm">
-      <span className="block mb-1.5 text-muted-foreground">{label}</span>
-      <input type={type} className="w-full px-4 py-2.5 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-parent/40" />
+      <span className="block mb-2 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+        {label}
+      </span>
+      <input
+        type={type}
+        className="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-parent/40"
+      />
     </label>
   );
 }
