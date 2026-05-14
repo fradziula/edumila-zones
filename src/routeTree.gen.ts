@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WszystkoRouteImport } from './routes/wszystko'
 import { Route as UczenRouteImport } from './routes/uczen'
 import { Route as RodzicRouteImport } from './routes/rodzic'
+import { Route as PrezentRouteImport } from './routes/prezent'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KarolinaRouteImport } from './routes/karolina'
 import { Route as IndexRouteImport } from './routes/index'
@@ -45,6 +46,11 @@ const UczenRoute = UczenRouteImport.update({
 const RodzicRoute = RodzicRouteImport.update({
   id: '/rodzic',
   path: '/rodzic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrezentRoute = PrezentRouteImport.update({
+  id: '/prezent',
+  path: '/prezent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/karolina': typeof KarolinaRouteWithChildren
   '/kontakt': typeof KontaktRoute
+  '/prezent': typeof PrezentRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/wszystko': typeof WszystkoRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
+  '/prezent': typeof PrezentRoute
   '/wszystko': typeof WszystkoRoute
   '/karolina/dorobek': typeof KarolinaDorobekRoute
   '/karolina/historia': typeof KarolinaHistoriaRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/karolina': typeof KarolinaRouteWithChildren
   '/kontakt': typeof KontaktRoute
+  '/prezent': typeof PrezentRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/wszystko': typeof WszystkoRoute
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | '/'
     | '/karolina'
     | '/kontakt'
+    | '/prezent'
     | '/rodzic'
     | '/uczen'
     | '/wszystko'
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/kontakt'
+    | '/prezent'
     | '/wszystko'
     | '/karolina/dorobek'
     | '/karolina/historia'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/'
     | '/karolina'
     | '/kontakt'
+    | '/prezent'
     | '/rodzic'
     | '/uczen'
     | '/wszystko'
@@ -289,6 +301,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KarolinaRoute: typeof KarolinaRouteWithChildren
   KontaktRoute: typeof KontaktRoute
+  PrezentRoute: typeof PrezentRoute
   RodzicRoute: typeof RodzicRouteWithChildren
   UczenRoute: typeof UczenRouteWithChildren
   WszystkoRoute: typeof WszystkoRoute
@@ -315,6 +328,13 @@ declare module '@tanstack/react-router' {
       path: '/rodzic'
       fullPath: '/rodzic'
       preLoaderRoute: typeof RodzicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prezent': {
+      id: '/prezent'
+      path: '/prezent'
+      fullPath: '/prezent'
+      preLoaderRoute: typeof PrezentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -516,6 +536,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KarolinaRoute: KarolinaRouteWithChildren,
   KontaktRoute: KontaktRoute,
+  PrezentRoute: PrezentRoute,
   RodzicRoute: RodzicRouteWithChildren,
   UczenRoute: UczenRouteWithChildren,
   WszystkoRoute: WszystkoRoute,
@@ -523,3 +544,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
