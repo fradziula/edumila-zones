@@ -170,7 +170,6 @@ function Home() {
 
       {/* THREE ZONES */}
       <Section
-        eyebrow="Wybierz swoją drogę"
         title="Trzy wejścia, jedna marka"
       >
         <div className="grid gap-5 md:grid-cols-3">
