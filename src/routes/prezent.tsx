@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { sendGiftEmail } from "@/lib/send-gift-email.functions";
 import { GiftPackageSelect, formatGiftDisplay, type GiftPackage } from "@/components/GiftPackageSelect";
 
 export const Route = createFileRoute("/prezent")({
@@ -48,6 +50,8 @@ const giftPackages: GiftPackage[] = [
 function Prezent() {
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const send = useServerFn(sendGiftEmail);
 
   const selected = giftPackages.find((p) => p.packageId === selectedPackageId) ?? null;
   // Stan zgodny z późniejszą integracją Stripe.
@@ -58,15 +62,41 @@ function Prezent() {
     selectedPricePln: selected?.pricePln ?? null,
   };
 
-  function handleSubmit(e: React.FormEvent) {
+  const STRIPE_LINK = "https://buy.stripe.com/6oU6oIgjofuFbk91Ni33W00";
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!formState.selectedPackageId) {
+    if (!formState.selectedPackageId || !selected) {
       setError("Wybierz pakiet lekcji.");
       return;
     }
+    const fd = new FormData(e.currentTarget);
+    const studentName = String(fd.get("studentName") ?? "").trim();
+    const phone = String(fd.get("phone") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim();
+    if (!studentName || !phone || !email) {
+      setError("Uzupełnij wszystkie pola formularza.");
+      return;
+    }
     setError(null);
-    // TODO(Stripe): wyślij { packageId: formState.selectedPackageId } do server function,
-    // backend zmapuje packageId -> Stripe Price ID i utworzy Checkout Session.
+    setSubmitting(true);
+    try {
+      await send({
+        data: {
+          studentName,
+          phone,
+          email,
+          packageId: selected.packageId,
+          lessonsCount: selected.lessonsCount,
+          pricePln: selected.pricePln,
+        },
+      });
+      window.location.href = STRIPE_LINK;
+    } catch (err) {
+      console.error(err);
+      setError("Nie udało się wysłać zgłoszenia. Spróbuj ponownie za chwilę.");
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -103,9 +133,9 @@ function Prezent() {
           <h2 className="font-display text-3xl md:text-4xl font-semibold">Formularz</h2>
 
           <div className="flex flex-col gap-5 mt-2">
-            <Field label="imie ucznia" />
-            <Field label="Numer telefonu" type="tel" />
-            <Field label="adres email" type="email" />
+            <Field label="imie ucznia" name="studentName" required />
+            <Field label="Numer telefonu" name="phone" type="tel" required />
+            <Field label="adres email" name="email" type="email" required />
           </div>
 
           <fieldset className="mt-4 flex flex-col gap-3">
@@ -139,9 +169,10 @@ function Prezent() {
 
           <button
             type="submit"
-            className="mt-4 w-full px-6 py-4 rounded-full bg-parent text-background font-display text-xl font-semibold hover:bg-parent/90 transition"
+            disabled={submitting}
+            className="mt-4 w-full px-6 py-4 rounded-full bg-parent text-background font-display text-xl font-semibold hover:bg-parent/90 transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Zapłać
+            {submitting ? "Wysyłanie…" : "Zapłać"}
           </button>
         </form>
       </div>
@@ -149,14 +180,16 @@ function Prezent() {
   );
 }
 
-function Field({ label, type = "text" }: { label: string; type?: string }) {
+function Field({ label, name, type = "text", required }: { label: string; name: string; type?: string; required?: boolean }) {
   return (
     <label className="text-sm">
       <span className="block mb-2 text-xs uppercase tracking-[0.15em] text-muted-foreground">
         {label}
       </span>
       <input
+        name={name}
         type={type}
+        required={required}
         className="w-full px-4 py-3 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-parent/40"
       />
     </label>
