@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
-const RECIPIENT = "ciasfrancek@gmial.com";
+const RECIPIENT = "ciasfrancek@gmail.com";
 
 const Schema = z.object({
   studentName: z.string().min(1).max(200),
