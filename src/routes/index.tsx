@@ -172,7 +172,6 @@ function Home() {
       <Section
         eyebrow="Wybierz swoją drogę"
         title="Trzy wejścia, jedna marka"
-        subtitle="Mówię osobno do rodzica, ucznia i o sobie. Wybierz, co pasuje teraz."
       >
         <div className="grid gap-5 md:grid-cols-3">
           {zones.map((z) => (
