@@ -32,6 +32,7 @@ import { Route as RodzicCennikRouteImport } from './routes/rodzic.cennik'
 import { Route as KarolinaMetodaRouteImport } from './routes/karolina.metoda'
 import { Route as KarolinaHistoriaRouteImport } from './routes/karolina.historia'
 import { Route as KarolinaDorobekRouteImport } from './routes/karolina.dorobek'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 
 const WszystkoRoute = WszystkoRouteImport.update({
   id: '/wszystko',
@@ -148,6 +149,11 @@ const KarolinaDorobekRoute = KarolinaDorobekRouteImport.update({
   path: '/dorobek',
   getParentRoute: () => KarolinaRoute,
 } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/karolina/': typeof KarolinaIndexRoute
   '/rodzic/': typeof RodzicIndexRoute
   '/uczen/': typeof UczenIndexRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/karolina': typeof KarolinaIndexRoute
   '/rodzic': typeof RodzicIndexRoute
   '/uczen': typeof UczenIndexRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -221,6 +229,7 @@ export interface FileRoutesById {
   '/karolina/': typeof KarolinaIndexRoute
   '/rodzic/': typeof RodzicIndexRoute
   '/uczen/': typeof UczenIndexRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/karolina/'
     | '/rodzic/'
     | '/uczen/'
+    | '/api/public/stripe-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
     | '/karolina'
     | '/rodzic'
     | '/uczen'
+    | '/api/public/stripe-webhook'
   id:
     | '__root__'
     | '/'
@@ -295,6 +306,7 @@ export interface FileRouteTypes {
     | '/karolina/'
     | '/rodzic/'
     | '/uczen/'
+    | '/api/public/stripe-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -305,6 +317,7 @@ export interface RootRouteChildren {
   RodzicRoute: typeof RodzicRouteWithChildren
   UczenRoute: typeof UczenRouteWithChildren
   WszystkoRoute: typeof WszystkoRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -470,6 +483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KarolinaDorobekRouteImport
       parentRoute: typeof KarolinaRoute
     }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -540,6 +560,7 @@ const rootRouteChildren: RootRouteChildren = {
   RodzicRoute: RodzicRouteWithChildren,
   UczenRoute: UczenRouteWithChildren,
   WszystkoRoute: WszystkoRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
