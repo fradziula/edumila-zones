@@ -138,6 +138,9 @@ function Prezent() {
             <p className="text-sm text-muted-foreground -mt-1 mb-2">
               Wybierz pakiet prezentowy. Cena zostanie przypisana automatycznie do wybranego pakietu.
             </p>
+            <p className="text-sm text-parent font-medium">
+              Przy zakupie minimum 12 lekcji obowiązuje promocyjna cena 75 zł za lekcję.
+            </p>
 
             <GiftPackageSelect
               packages={giftPackages}
