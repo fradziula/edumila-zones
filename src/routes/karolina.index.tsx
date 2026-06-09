@@ -63,7 +63,7 @@ function KHome() {
         </svg>
         <div className="container-page grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-center">
           <figure className="w-full max-w-sm mx-auto">
-            <div className="relative aspect-square w-full rounded-full overflow-hidden">
+            <div className="relative aspect-square w-full overflow-hidden">
               <img
                 src={karolinaPhoto}
                 alt="Karolina — korepetytorka EduMila"
