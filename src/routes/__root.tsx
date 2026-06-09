@@ -77,10 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "EduMila — Korepetycje z matematyki i chemii | Karolina" },
       { name: "description", content: "Korepetycje z matematyki i chemii — Wadowice i online. Klasy 4–8, liceum, matura. Kameralnie, spokojnie, skutecznie." },
       { name: "author", content: "EduMila" },
-      { property: "og:title", content: "EduMila — Odkryj ze mną siłę nauki" },
-      { property: "og:description", content: "Korepetycje z matematyki i chemii. Wadowice + online." },
+      { property: "og:title", content: "EduMila — Korepetycje z matematyki i chemii | Karolina" },
+      { property: "og:description", content: "Korepetycje z matematyki i chemii — Wadowice i online. Klasy 4–8, liceum, matura. Kameralnie, spokojnie, skutecznie." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "EduMila — Korepetycje z matematyki i chemii | Karolina" },
+      { name: "twitter:description", content: "Korepetycje z matematyki i chemii — Wadowice i online. Klasy 4–8, liceum, matura. Kameralnie, spokojnie, skutecznie." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9796e157-6a9f-4083-a37c-3e9383498be5/id-preview-4de300ec--72c56a62-96e9-42af-a65b-94c690ea1b26.lovable.app-1780844163699.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9796e157-6a9f-4083-a37c-3e9383498be5/id-preview-4de300ec--72c56a62-96e9-42af-a65b-94c690ea1b26.lovable.app-1780844163699.png" },
     ],
     links: [
       {
