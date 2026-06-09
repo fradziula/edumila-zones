@@ -139,9 +139,8 @@ function Home() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-6 bg-gradient-to-br from-karolina/20 via-student/10 to-transparent blur-3xl -z-10" />
             <figure className="w-full max-w-md mx-auto">
-              <div className="relative aspect-square w-full rounded-full overflow-hidden">
+              <div className="relative aspect-square w-full overflow-hidden">
                 <img
                   src={karolinaPhoto}
                   alt="Karolina — korepetytorka, twórczyni marki EduMila"
