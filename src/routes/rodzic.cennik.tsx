@@ -15,9 +15,7 @@ const single = [
 ];
 
 const packs = [
-  { t: "Pakiet 4 lekcji", off: "−5%", d: "Dobry start dla nowych uczniów." },
-  { t: "Pakiet 8 lekcji", off: "−10%", d: "Najczęściej wybierany.", featured: true },
-  { t: "Pakiet Maturalny finisz", off: "−15%", d: "16 lekcji przygotowujących do matury." },
+  { t: "Promocyjny pakiet", off: "75 zł / lekcja", d: "Przy zakupie minimum 12 lekcji obowiązuje promocyjna cena 75 zł za lekcję.", featured: true },
 ];
 
 function Cennik() {
