@@ -35,7 +35,7 @@ function Cennik() {
         </div>
       </Section>
       <Section title="Pakiety" subtitle="Jeden raz płacisz, potem korzystasz z lekcji w swoim tempie.">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-1">
           {packs.map((p) => (
             <div key={p.t} className={`card-surface p-7 relative ${p.featured ? "glow-parent ring-1 ring-parent/50" : ""}`}>
               {p.featured && (
