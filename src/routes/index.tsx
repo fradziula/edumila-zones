@@ -140,7 +140,7 @@ function Home() {
 
           <div className="relative">
             <figure className="w-full max-w-md mx-auto">
-              <div className="relative aspect-square w-full overflow-hidden">
+              <div className="relative aspect-square w-full rounded-full overflow-hidden">
                 <img
                   src={karolinaPhoto}
                   alt="Karolina — korepetytorka, twórczyni marki EduMila"
