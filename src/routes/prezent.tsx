@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { sendGiftEmail } from "@/lib/send-gift-email.functions";
 import { GiftPackageSelect, formatGiftDisplay, type GiftPackage } from "@/components/GiftPackageSelect";
 
@@ -51,7 +50,6 @@ function Prezent() {
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const send = useServerFn(sendGiftEmail);
 
   const selected = giftPackages.find((p) => p.packageId === selectedPackageId) ?? null;
   // Stan zgodny z późniejszą integracją Stripe.
@@ -81,16 +79,15 @@ function Prezent() {
     setError(null);
     setSubmitting(true);
     try {
-      await send({
-        data: {
+            await sendGiftEmail({
+      
           studentName,
           phone,
           email,
           packageId: selected.packageId,
           lessonsCount: selected.lessonsCount,
           pricePln: selected.pricePln,
-        },
-      });
+      });  
       window.location.href = STRIPE_LINK;
     } catch (err) {
       console.error(err);
