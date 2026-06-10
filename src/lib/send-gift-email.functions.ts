@@ -19,7 +19,7 @@ export type SendGiftEmailInput = z.infer<typeof Schema>;
 // Replace BACKEND_URL with your actual backend endpoint when ready.
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? '';
 
-export const sendGiftEmail = async ({ data }: { data: SendGiftEmailInput }) => {
+export const sendGiftEmail = async (data: SendGiftEmailInput) => {
   const parsed = Schema.parse(data);
 
   if (!BACKEND_URL) {
