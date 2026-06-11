@@ -258,11 +258,11 @@ function Home() {
             { src: kubek2, n: 2 },
           ].map(({ src, n }) => (
             <figure key={n} className="w-full">
-              <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2 flex items-center justify-center">
+              <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2">
                 <img
                   src={src}
                   alt={`Kubek EduMila — ujęcie ${n}`}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
