@@ -31,6 +31,11 @@ function K() {
               <div className="w-11 h-11 rounded-xl bg-muted text-muted-foreground flex items-center justify-center"><MapPin size={18}/></div>
               <div><div className="text-xs text-muted-foreground">Lokalizacja</div><div className="font-medium">Wadowice + online (cała Polska)</div></div>
             </div>
+            <div className="card-surface p-5">
+              <div className="text-xs text-muted-foreground mb-1">Dane firmy</div>
+              <div className="font-medium">Korepetycje- Karolina Widlarz</div>
+              <div className="text-sm text-muted-foreground mt-1">NIP: 5512667603</div>
+            </div>
           </div>
 
           <form className="card-surface p-7 grid gap-4" onSubmit={(e) => e.preventDefault()}>

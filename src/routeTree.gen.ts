@@ -13,6 +13,7 @@ import { Route as WszystkoRouteImport } from './routes/wszystko'
 import { Route as UczenRouteImport } from './routes/uczen'
 import { Route as RodzicRouteImport } from './routes/rodzic'
 import { Route as PrezentRouteImport } from './routes/prezent'
+import { Route as PolitykaPrywatnosciRouteImport } from './routes/polityka-prywatnosci'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KarolinaRouteImport } from './routes/karolina'
 import { Route as IndexRouteImport } from './routes/index'
@@ -52,6 +53,11 @@ const RodzicRoute = RodzicRouteImport.update({
 const PrezentRoute = PrezentRouteImport.update({
   id: '/prezent',
   path: '/prezent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitykaPrywatnosciRoute = PolitykaPrywatnosciRouteImport.update({
+  id: '/polityka-prywatnosci',
+  path: '/polityka-prywatnosci',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/karolina': typeof KarolinaRouteWithChildren
   '/kontakt': typeof KontaktRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/prezent': typeof PrezentRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/prezent': typeof PrezentRoute
   '/wszystko': typeof WszystkoRoute
   '/karolina/dorobek': typeof KarolinaDorobekRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/karolina': typeof KarolinaRouteWithChildren
   '/kontakt': typeof KontaktRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/prezent': typeof PrezentRoute
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/'
     | '/karolina'
     | '/kontakt'
+    | '/polityka-prywatnosci'
     | '/prezent'
     | '/rodzic'
     | '/uczen'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/kontakt'
+    | '/polityka-prywatnosci'
     | '/prezent'
     | '/wszystko'
     | '/karolina/dorobek'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/'
     | '/karolina'
     | '/kontakt'
+    | '/polityka-prywatnosci'
     | '/prezent'
     | '/rodzic'
     | '/uczen'
@@ -313,6 +325,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KarolinaRoute: typeof KarolinaRouteWithChildren
   KontaktRoute: typeof KontaktRoute
+  PolitykaPrywatnosciRoute: typeof PolitykaPrywatnosciRoute
   PrezentRoute: typeof PrezentRoute
   RodzicRoute: typeof RodzicRouteWithChildren
   UczenRoute: typeof UczenRouteWithChildren
@@ -348,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/prezent'
       fullPath: '/prezent'
       preLoaderRoute: typeof PrezentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/polityka-prywatnosci': {
+      id: '/polityka-prywatnosci'
+      path: '/polityka-prywatnosci'
+      fullPath: '/polityka-prywatnosci'
+      preLoaderRoute: typeof PolitykaPrywatnosciRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -556,6 +576,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KarolinaRoute: KarolinaRouteWithChildren,
   KontaktRoute: KontaktRoute,
+  PolitykaPrywatnosciRoute: PolitykaPrywatnosciRoute,
   PrezentRoute: PrezentRoute,
   RodzicRoute: RodzicRouteWithChildren,
   UczenRoute: UczenRouteWithChildren,

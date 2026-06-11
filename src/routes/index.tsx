@@ -218,7 +218,7 @@ function Home() {
             },
             {
               t: "Online lub w Wadowicach",
-              d: "Lekcje zdalne (Meet, Skype, Teams) lub stacjonarnie u mnie.",
+              d: "Lekcje zdalne (Meet, Skype, Teams) lub Stacjonarnie w siedzibie.",
             },
           ].map((b) => (
             <div key={t(b.t)} className="card-surface p-6">
@@ -256,8 +256,6 @@ function Home() {
           {[
             { src: kubek1, n: 1 },
             { src: kubek2, n: 2 },
-            { src: kubek3, n: 3 },
-            { src: kubek4, n: 4 },
           ].map(({ src, n }) => (
             <figure key={n} className="w-full">
               <div className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2">
@@ -268,9 +266,6 @@ function Home() {
                   loading="lazy"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-muted-foreground text-center">
-                Kubek EduMila — ujęcie {n}
-              </figcaption>
             </figure>
           ))}
         </div>
