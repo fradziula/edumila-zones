@@ -17,7 +17,7 @@ function ParentHome() {
         eyebrow="Strefa Rodzica"
         tone="parent"
         title={<>Spokojne wsparcie w nauce, <span className="text-parent">bez presji.</span></>}
-        subtitle="Matematyka i chemia — klasy 4–8, liceum, matura. Mówię prosto, jak wyglądają lekcje, ile to kosztuje i czego można się spodziewać."
+        subtitle="Matematyka i chemia — szkoła podstawowa, liceum, technikum. Mówię prosto, jak wyglądają lekcje, ile to kosztuje i czego można się spodziewać."
       >
         <div className="flex flex-wrap gap-3">
           <Link to="/rodzic/oferta" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-foreground text-background font-medium">
@@ -45,9 +45,9 @@ function ParentHome() {
         </div>
       </Section>
 
-      <Section eyebrow="Najczęstsze pytania" title="Dobre, żeby wiedzieć">
+      <Section eyebrow="Najczęstsze pytania" title="Dobrze wiedzieć">
         <QABlock items={[
-          { q: "Jak wygląda pierwsza lekcja?", a: "Sprawdzam, gdzie uczeń jest naprawdę, a nie gdzie powinien być według programu. Bez sprawdzania z ocen." },
+          { q: "Jak wygląda pierwsza lekcja?", a: "Sprawdzam, gdzie uczeń jest naprawdę, a nie gdzie powinien być według programu." },
           { q: "Czy lekcje online działają?", a: "Tak. Korzystam z tablicy graficznej i zapisuję notatki. Po lekcji dziecko ma do nich dostęp." },
           { q: "Czy mogę być na pierwszej lekcji?", a: "Oczywiście. Część rodziców tak woli — szczególnie u młodszych dzieci." },
         ]} />

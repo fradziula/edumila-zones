@@ -11,7 +11,7 @@ export const Route = createFileRoute("/rodzic/cennik")({
 const single = [
   { t: "60 minut", price: "80 zł", d: "Pojedyncza lekcja indywidualna." },
   { t: "90 minut", price: "110 zł", d: "Dłuższa praca, dobra na trudne tematy.", featured: true },
-  { t: "Zajęcia w parze", price: "120 zł / os.", d: "Min. 2 osoby. Cena za osobę." },
+  { t: "Zajęcia w parze", price: "60 zł/osobę", d: "Min. 2 osoby. Cena za osobę." },
 ];
 
 const packs = [

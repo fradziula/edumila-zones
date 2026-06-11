@@ -35,7 +35,10 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="container-page py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
           <span>© {new Date().getFullYear()} EduMila — Karolina</span>
-          <Link to="/rodzic/regulamin" className="hover:text-foreground">Regulamin</Link>
+          <div className="flex gap-4">
+            <Link to="/polityka-prywatnosci" className="hover:text-foreground">Polityka prywatności</Link>
+            <Link to="/rodzic/regulamin" className="hover:text-foreground">Regulamin</Link>
+          </div>
         </div>
       </div>
     </footer>

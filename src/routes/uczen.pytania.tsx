@@ -11,7 +11,7 @@ export const Route = createFileRoute("/uczen/pytania")({
 function Q() {
   return (
     <>
-      <PageHero eyebrow="Pytania" tone="student" title="Krótkie odpowiedzi na typowe rzeczy" />
+      <PageHero eyebrow="Pytania" tone="student" title="Krótkie odpowiedzi na typowe pytania" />
       <Section>
         <QABlock items={[
           { q: "A jak nic nie umiem?", a: "To nie problem. Pierwsza lekcja jest właśnie po to, żeby zobaczyć, od czego zacząć." },
