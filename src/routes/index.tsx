@@ -252,17 +252,17 @@ function Home() {
 
       {/* EDU MILA W REALU */}
       <Section eyebrow="Drobiazgi" title="EduMila w realu" subtitle="Coś od nas — kubki EduMila. Drobiazgi, które trafiają do uczniów po dłuższej współpracy.">
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 max-w-3xl mx-auto">
           {[
             { src: kubek1, n: 1 },
             { src: kubek2, n: 2 },
           ].map(({ src, n }) => (
             <figure key={n} className="w-full">
-              <div className="w-full rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2">
+              <div className="w-full aspect-[3/4] rounded-3xl overflow-hidden ring-1 ring-border bg-surface-2 flex items-center justify-center">
                 <img
                   src={src}
                   alt={`Kubek EduMila — ujęcie ${n}`}
-                  className="w-full h-auto"
+                  className="w-full h-full object-contain"
                   loading="lazy"
                 />
               </div>
