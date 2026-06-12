@@ -29,6 +29,8 @@ export function Footer() {
             <li className="flex items-center gap-2"><Phone size={14} /> 667 541 916</li>
             <li className="flex items-center gap-2"><Mail size={14} /> edumila.kontakt@gmail.com</li>
             <li className="flex items-center gap-2"><AtSign size={14} /> @korepetycje_edumila</li>
+            <li className="pt-2">Karolina Widlarz</li>
+            <li>NIP: 5512667603</li>
           </ul>
         </div>
       </div>
