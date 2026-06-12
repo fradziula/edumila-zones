@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ZakupRouteImport } from './routes/zakup'
 import { Route as WszystkoRouteImport } from './routes/wszystko'
 import { Route as UczenRouteImport } from './routes/uczen'
 import { Route as RodzicRouteImport } from './routes/rodzic'
@@ -34,6 +35,11 @@ import { Route as KarolinaMetodaRouteImport } from './routes/karolina.metoda'
 import { Route as KarolinaHistoriaRouteImport } from './routes/karolina.historia'
 import { Route as KarolinaDorobekRouteImport } from './routes/karolina.dorobek'
 
+const ZakupRoute = ZakupRouteImport.update({
+  id: '/zakup',
+  path: '/zakup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WszystkoRoute = WszystkoRouteImport.update({
   id: '/wszystko',
   path: '/wszystko',
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/wszystko': typeof WszystkoRoute
+  '/zakup': typeof ZakupRoute
   '/karolina/dorobek': typeof KarolinaDorobekRoute
   '/karolina/historia': typeof KarolinaHistoriaRoute
   '/karolina/metoda': typeof KarolinaMetodaRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/prezent': typeof PrezentRoute
   '/wszystko': typeof WszystkoRoute
+  '/zakup': typeof ZakupRoute
   '/karolina/dorobek': typeof KarolinaDorobekRoute
   '/karolina/historia': typeof KarolinaHistoriaRoute
   '/karolina/metoda': typeof KarolinaMetodaRoute
@@ -214,6 +222,7 @@ export interface FileRoutesById {
   '/rodzic': typeof RodzicRouteWithChildren
   '/uczen': typeof UczenRouteWithChildren
   '/wszystko': typeof WszystkoRoute
+  '/zakup': typeof ZakupRoute
   '/karolina/dorobek': typeof KarolinaDorobekRoute
   '/karolina/historia': typeof KarolinaHistoriaRoute
   '/karolina/metoda': typeof KarolinaMetodaRoute
@@ -242,6 +251,7 @@ export interface FileRouteTypes {
     | '/rodzic'
     | '/uczen'
     | '/wszystko'
+    | '/zakup'
     | '/karolina/dorobek'
     | '/karolina/historia'
     | '/karolina/metoda'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/polityka-prywatnosci'
     | '/prezent'
     | '/wszystko'
+    | '/zakup'
     | '/karolina/dorobek'
     | '/karolina/historia'
     | '/karolina/metoda'
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '/rodzic'
     | '/uczen'
     | '/wszystko'
+    | '/zakup'
     | '/karolina/dorobek'
     | '/karolina/historia'
     | '/karolina/metoda'
@@ -318,10 +330,18 @@ export interface RootRouteChildren {
   RodzicRoute: typeof RodzicRouteWithChildren
   UczenRoute: typeof UczenRouteWithChildren
   WszystkoRoute: typeof WszystkoRoute
+  ZakupRoute: typeof ZakupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/zakup': {
+      id: '/zakup'
+      path: '/zakup'
+      fullPath: '/zakup'
+      preLoaderRoute: typeof ZakupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wszystko': {
       id: '/wszystko'
       path: '/wszystko'
@@ -561,6 +581,7 @@ const rootRouteChildren: RootRouteChildren = {
   RodzicRoute: RodzicRouteWithChildren,
   UczenRoute: UczenRouteWithChildren,
   WszystkoRoute: WszystkoRoute,
+  ZakupRoute: ZakupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
