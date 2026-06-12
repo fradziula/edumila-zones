@@ -34,7 +34,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="container-page py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
-          <span>© {new Date().getFullYear()} EduMila — Karolina</span>
+          <span>© {new Date().getFullYear()} Korepetycje — Karolina Widlarz | NIP: 5512667603</span>
           <div className="flex gap-4">
             <Link to="/polityka-prywatnosci" className="hover:text-foreground">Polityka prywatności</Link>
             <Link to="/rodzic/regulamin" className="hover:text-foreground">Regulamin</Link>
