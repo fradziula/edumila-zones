@@ -29,6 +29,10 @@ function K() {
             </a>
             <div className="card-surface p-5 flex items-center gap-4">
               <div className="w-11 h-11 rounded-xl bg-muted text-muted-foreground flex items-center justify-center"><MapPin size={18}/></div>
+              <div><div className="text-xs text-muted-foreground">Adres</div><div className="font-medium">ul. Pniaki 190, 34-124 Klecza Dolna</div></div>
+            </div>
+            <div className="card-surface p-5 flex items-center gap-4">
+              <div className="w-11 h-11 rounded-xl bg-muted text-muted-foreground flex items-center justify-center"><MapPin size={18}/></div>
               <div><div className="text-xs text-muted-foreground">Lokalizacja</div><div className="font-medium">Wadowice + online (cała Polska)</div></div>
             </div>
             <div className="card-surface p-5">
