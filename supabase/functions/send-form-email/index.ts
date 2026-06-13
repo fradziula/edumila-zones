@@ -27,12 +27,17 @@ const GiftSchema = z.object({
 
 const BodySchema = z.discriminatedUnion('kind', [ContactSchema, GiftSchema]);
 
-// Adres docelowy — właściciel EduMila.
-const TO = 'edumila.kontakt@gmail.com';
-// Sender. UWAGA: wymaga zweryfikowanej domeny w Resend.
-// Jeśli `kontakt@edumila.pl` nie jest jeszcze zweryfikowany, fallback do
-// `onboarding@resend.dev` (działa zawsze, bez weryfikacji domeny).
+// === KONFIGURACJA ADRESÓW (jedno miejsce) ===
+// MAIL_FROM  — nadawca. MUSI być z domeny zweryfikowanej w Resend.
+//              Po weryfikacji edumila.pl ustaw w Cloud → Secrets:
+//                MAIL_FROM = "EduMila <kontakt@edumila.pl>"
+//              Dopóki secret nie jest ustawiony, używamy sandboxowego
+//              `onboarding@resend.dev` (działa zawsze, ale tylko w trybie testowym).
+// MAIL_TO    — odbiorca (skrzynka, na którą trafiają wiadomości z formularzy).
+//              Domyślnie `edumila.kontakt@gmail.com`. Zmień przez secret
+//                MAIL_TO = "biuro@edumila.pl"
 const FROM = Deno.env.get('MAIL_FROM') ?? 'EduMila <onboarding@resend.dev>';
+const TO = Deno.env.get('MAIL_TO') ?? 'edumila.kontakt@gmail.com';
 
 function esc(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
