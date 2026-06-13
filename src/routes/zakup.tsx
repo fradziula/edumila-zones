@@ -311,9 +311,16 @@ function CartSummary({
 }) {
   return (
     <div className="card-surface p-6">
-      <div className="flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-muted-foreground">
-        <ShoppingCart className="w-4 h-4" />
-        Twój koszyk
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-muted-foreground">
+          <ShoppingCart className="w-4 h-4" />
+          {cart ? "Twoje zamówienie" : "Twój koszyk"}
+        </div>
+        {cart && (
+          <span className="text-[10px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full bg-parent/15 text-parent">
+            1 pozycja
+          </span>
+        )}
       </div>
 
       {!cart ? (
@@ -540,7 +547,15 @@ function OrderSummary({
 
   return (
     <div className="card-surface p-6 md:p-8 flex flex-col gap-6">
-      <h2 className="font-display text-2xl md:text-3xl font-semibold">Twoje zamówienie</h2>
+      <div>
+        <p className="uppercase text-xs tracking-[0.2em] font-medium text-parent mb-2">
+          Krok 3 / 4
+        </p>
+        <h2 className="font-display text-2xl md:text-3xl font-semibold">Podsumowanie zamówienia</h2>
+        <p className="text-sm text-muted-foreground mt-1">
+          Sprawdź szczegóły zanim przejdziesz do płatności.
+        </p>
+      </div>
 
       <div className="rounded-xl border border-border p-5">
         <div className="flex items-start justify-between gap-3">
