@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AtSign, Mail, MapPin, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone, Loader2, Check, AlertCircle } from "lucide-react";
+import { useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({ meta: [{ title: "Kontakt — EduMila" }, { name: "description", content: "Telefon, e-mail, Instagram. Wadowice + online." }] }),
@@ -42,33 +44,111 @@ function K() {
             </div>
           </div>
 
-          <form className="card-surface p-7 grid gap-4" onSubmit={(e) => e.preventDefault()}>
-            <h3 className="font-display text-xl font-semibold">Wyślij wiadomość</h3>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Imię" />
-              <Field label="E-mail" type="email" />
-            </div>
-            <Field label="Czego dotyczy?" />
-            <label className="text-sm">
-              <span className="block mb-1.5 text-muted-foreground">Wiadomość</span>
-              <textarea rows={5} className="w-full px-4 py-2.5 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-karolina/40" />
-            </label>
-            <div className="flex justify-between items-center pt-2">
-              <p className="text-xs text-muted-foreground">Odpowiadam w ciągu 24h.</p>
-              <button className="px-5 py-3 rounded-full bg-foreground text-background font-medium">Wyślij</button>
-            </div>
-          </form>
+          <ContactForm />
         </div>
       </Section>
     </>
   );
 }
 
-function Field({ label, type = "text" }: { label: string; type?: string }) {
+function ContactForm() {
+  const [state, setState] = useState<
+    { kind: "idle" } | { kind: "loading" } | { kind: "ok" } | { kind: "error"; message: string }
+  >({ kind: "idle" });
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name = String(fd.get("name") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim();
+    const subject = String(fd.get("subject") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
+    if (!name || !email || !message) {
+      setState({ kind: "error", message: "Uzupełnij imię, e-mail i wiadomość." });
+      return;
+    }
+    setState({ kind: "loading" });
+    try {
+      const { data, error } = await supabase.functions.invoke("send-form-email", {
+        body: { kind: "contact", name, email, subject, message },
+      });
+      if (error) throw new Error(error.message || "Błąd sieci.");
+      if (!data?.ok) {
+        throw new Error(
+          `Wysyłka nie powiodła się: ${data?.error ?? "unknown"}${
+            data?.details ? ` (${JSON.stringify(data.details)})` : ""
+          }`,
+        );
+      }
+      setState({ kind: "ok" });
+      (e.target as HTMLFormElement).reset();
+    } catch (err) {
+      setState({ kind: "error", message: (err as Error)?.message ?? "Nie udało się wysłać wiadomości." });
+    }
+  }
+
+  if (state.kind === "ok") {
+    return (
+      <div className="card-surface p-7 grid gap-3 text-center">
+        <div className="mx-auto w-12 h-12 rounded-full bg-parent/15 text-parent flex items-center justify-center">
+          <Check className="w-6 h-6" />
+        </div>
+        <h3 className="font-display text-xl font-semibold">Wiadomość wysłana</h3>
+        <p className="text-sm text-muted-foreground">Dziękuję! Odpowiem najszybciej, jak będzie to możliwe.</p>
+        <button
+          type="button"
+          onClick={() => setState({ kind: "idle" })}
+          className="mx-auto mt-2 px-5 py-2.5 rounded-full border border-border text-sm hover:bg-input/50 transition"
+        >
+          Wyślij kolejną wiadomość
+        </button>
+      </div>
+    );
+  }
+
+  const loading = state.kind === "loading";
+  return (
+    <form className="card-surface p-7 grid gap-4" onSubmit={onSubmit} noValidate>
+      <h3 className="font-display text-xl font-semibold">Wyślij wiadomość</h3>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Field label="Imię" name="name" required />
+        <Field label="E-mail" name="email" type="email" required />
+      </div>
+      <Field label="Czego dotyczy?" name="subject" />
+      <label className="text-sm">
+        <span className="block mb-1.5 text-muted-foreground">Wiadomość *</span>
+        <textarea
+          name="message"
+          rows={5}
+          required
+          className="w-full px-4 py-2.5 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-karolina/40"
+        />
+      </label>
+      {state.kind === "error" && (
+        <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300 flex items-start gap-2" role="alert">
+          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+          <span>{state.message}</span>
+        </div>
+      )}
+      <div className="flex justify-between items-center pt-2 gap-3">
+        <p className="text-xs text-muted-foreground">Odpowiadam w ciągu 24h.</p>
+        <button
+          disabled={loading}
+          className="px-5 py-3 rounded-full bg-foreground text-background font-medium disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
+        >
+          {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+          {loading ? "Wysyłam…" : "Wyślij"}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function Field({ label, name, type = "text", required }: { label: string; name: string; type?: string; required?: boolean }) {
   return (
     <label className="text-sm">
-      <span className="block mb-1.5 text-muted-foreground">{label}</span>
-      <input type={type} className="w-full px-4 py-2.5 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-karolina/40" />
+      <span className="block mb-1.5 text-muted-foreground">{label}{required && " *"}</span>
+      <input name={name} type={type} required={required} className="w-full px-4 py-2.5 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-karolina/40" />
     </label>
   );
 }
