@@ -1,9 +1,8 @@
-// NOTE: This was a TanStack Start server function.
-// On GitHub Pages (static hosting), email sending requires a separate backend
-// (e.g., Vercel Functions, Netlify Functions, or Cloudflare Workers).
-// This stub allows the frontend to compile. Replace with your backend API URL.
-
+// Wysyłka maila z formularza Prezent.
+// Wywołuje edge function `send-form-email`, która używa Resend po stronie
+// serwera (RESEND_API_KEY nigdy nie trafia do frontu).
 import { z } from 'zod';
+import { supabase } from '@/integrations/supabase/client';
 
 const Schema = z.object({
   studentName: z.string().min(1).max(200),
@@ -16,27 +15,18 @@ const Schema = z.object({
 
 export type SendGiftEmailInput = z.infer<typeof Schema>;
 
-// Replace BACKEND_URL with your actual backend endpoint when ready.
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? '';
-
 export const sendGiftEmail = async (data: SendGiftEmailInput) => {
   const parsed = Schema.parse(data);
-
-  if (!BACKEND_URL) {
-    // In static deploy without backend, skip email sending
-    console.warn('VITE_BACKEND_URL not set — email sending disabled in static mode.');
-    return { ok: true as const };
-  }
-
-  const response = await fetch(`${BACKEND_URL}/emails`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(parsed),
+  const { data: res, error } = await supabase.functions.invoke('send-form-email', {
+    body: { kind: 'gift', ...parsed },
   });
-
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(`API failed [${response.status}]: ${JSON.stringify(body)}`);
+  if (error) {
+    throw new Error(error.message || 'Nie udało się wysłać wiadomości.');
+  }
+  if (!res?.ok) {
+    throw new Error(
+      `Wysyłka nie powiodła się: ${res?.error ?? 'unknown'}${res?.details ? ` (${JSON.stringify(res.details)})` : ''}`,
+    );
   }
   return { ok: true as const };
 };

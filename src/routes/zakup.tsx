@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, ShoppingCart, ArrowLeft, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import { packages, formatPLN, SELLER, type Package } from "@/lib/packages";
 import {
@@ -46,6 +46,7 @@ function ZakupPage() {
     { kind: "idle" } | { kind: "loading" } | { kind: "error"; message: string }
   >({ kind: "idle" });
   const [toast, setToast] = useState<string | null>(null);
+  const cartRef = useRef<HTMLDivElement | null>(null);
 
   function selectPackage(pkg: Package) {
     // Prosty checkout dla jednego pakietu: nowy wybór ZAWSZE zastępuje
@@ -58,6 +59,13 @@ function ZakupPage() {
         : `Dodano do koszyka: ${pkg.name}`,
     );
     window.setTimeout(() => setToast(null), 2200);
+    // Na mniejszych ekranach koszyk jest pod listą pakietów —
+    // przewijamy do niego, żeby użytkownik od razu widział wybór.
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
+      window.setTimeout(() => {
+        cartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
   }
 
   function validateForm(): boolean {
@@ -160,6 +168,7 @@ function ZakupPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24">
+          <div ref={cartRef} />
           <CartSummary
             cart={cart}
             total={total}
@@ -302,9 +311,16 @@ function CartSummary({
 }) {
   return (
     <div className="card-surface p-6">
-      <div className="flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-muted-foreground">
-        <ShoppingCart className="w-4 h-4" />
-        Twój koszyk
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-muted-foreground">
+          <ShoppingCart className="w-4 h-4" />
+          {cart ? "Twoje zamówienie" : "Twój koszyk"}
+        </div>
+        {cart && (
+          <span className="text-[10px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full bg-parent/15 text-parent">
+            1 pozycja
+          </span>
+        )}
       </div>
 
       {!cart ? (
@@ -531,7 +547,15 @@ function OrderSummary({
 
   return (
     <div className="card-surface p-6 md:p-8 flex flex-col gap-6">
-      <h2 className="font-display text-2xl md:text-3xl font-semibold">Twoje zamówienie</h2>
+      <div>
+        <p className="uppercase text-xs tracking-[0.2em] font-medium text-parent mb-2">
+          Krok 3 / 4
+        </p>
+        <h2 className="font-display text-2xl md:text-3xl font-semibold">Podsumowanie zamówienia</h2>
+        <p className="text-sm text-muted-foreground mt-1">
+          Sprawdź szczegóły zanim przejdziesz do płatności.
+        </p>
+      </div>
 
       <div className="rounded-xl border border-border p-5">
         <div className="flex items-start justify-between gap-3">
