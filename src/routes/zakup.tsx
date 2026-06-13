@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, ShoppingCart, ArrowLeft, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import { packages, formatPLN, SELLER, type Package } from "@/lib/packages";
 import {
@@ -46,6 +46,7 @@ function ZakupPage() {
     { kind: "idle" } | { kind: "loading" } | { kind: "error"; message: string }
   >({ kind: "idle" });
   const [toast, setToast] = useState<string | null>(null);
+  const cartRef = useRef<HTMLDivElement | null>(null);
 
   function selectPackage(pkg: Package) {
     // Prosty checkout dla jednego pakietu: nowy wybór ZAWSZE zastępuje
@@ -58,6 +59,13 @@ function ZakupPage() {
         : `Dodano do koszyka: ${pkg.name}`,
     );
     window.setTimeout(() => setToast(null), 2200);
+    // Na mniejszych ekranach koszyk jest pod listą pakietów —
+    // przewijamy do niego, żeby użytkownik od razu widział wybór.
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
+      window.setTimeout(() => {
+        cartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
   }
 
   function validateForm(): boolean {
@@ -160,6 +168,7 @@ function ZakupPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24">
+          <div ref={cartRef} />
           <CartSummary
             cart={cart}
             total={total}
