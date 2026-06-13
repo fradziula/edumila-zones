@@ -48,10 +48,15 @@ function ZakupPage() {
   const [toast, setToast] = useState<string | null>(null);
 
   function selectPackage(pkg: Package) {
-    setCart((prev) =>
-      prev?.pkg.id === pkg.id ? prev : { pkg, quantity: 1 },
+    // Prosty checkout dla jednego pakietu: nowy wybór ZAWSZE zastępuje
+    // poprzednią pozycję w koszyku. Ilość jest zawsze 1.
+    setCart({ pkg, quantity: 1 });
+    const replaced = cart && cart.pkg.id !== pkg.id;
+    setToast(
+      replaced
+        ? `Zamieniono pakiet w koszyku na: ${pkg.name}`
+        : `Dodano do koszyka: ${pkg.name}`,
     );
-    setToast(`Dodano do koszyka: ${pkg.name}`);
     window.setTimeout(() => setToast(null), 2200);
   }
 
@@ -268,7 +273,7 @@ function PackageGrid({
                     : "bg-foreground text-background hover:bg-foreground/90"
                 }`}
               >
-                {active ? "Wybrany ✓" : "Wybierz pakiet"}
+                {active ? "W koszyku ✓" : "Dodaj do koszyka"}
               </button>
             </div>
           </article>
