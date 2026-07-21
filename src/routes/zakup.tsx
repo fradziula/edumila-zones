@@ -2,11 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import { Check, ShoppingCart, ArrowLeft, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import { packages, formatPLN, SELLER, type Package } from "@/lib/packages";
-import {
-  buildOrderPayload,
-  startPayment,
-  type CustomerData,
-} from "@/lib/payments";
+import { buildOrderPayload, startPayment, type CustomerData } from "@/lib/payments";
 
 export const Route = createFileRoute("/zakup")({
   head: () => ({
@@ -30,6 +26,11 @@ type CartItem = {
 };
 
 function ZakupPage() {
+  return <PurchaseFlow />;
+}
+
+export function PurchaseFlow({ mode = "standard" }: { mode?: "standard" | "gift" }) {
+  const isGift = mode === "gift";
   const [cart, setCart] = useState<CartItem | null>(null);
   const [step, setStep] = useState<Step>("select");
   const [customer, setCustomer] = useState<CustomerData>({
@@ -54,9 +55,7 @@ function ZakupPage() {
     setCart({ pkg, quantity: 1 });
     const replaced = cart && cart.pkg.id !== pkg.id;
     setToast(
-      replaced
-        ? `Zamieniono pakiet w koszyku na: ${pkg.name}`
-        : `Dodano do koszyka: ${pkg.name}`,
+      replaced ? `Zamieniono pakiet w koszyku na: ${pkg.name}` : `Dodano do koszyka: ${pkg.name}`,
     );
     window.setTimeout(() => setToast(null), 2200);
     // Na mniejszych ekranach koszyk jest pod listą pakietów —
@@ -108,22 +107,21 @@ function ZakupPage() {
     }
   }
 
-  const total = useMemo(
-    () => (cart ? cart.pkg.priceGross * cart.quantity : 0),
-    [cart],
-  );
+  const total = useMemo(() => (cart ? cart.pkg.priceGross * cart.quantity : 0), [cart]);
 
   return (
     <section className="container-page py-16 md:py-24">
       <header className="max-w-3xl">
         <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3 text-muted-foreground">
-          Zakup pakietu
+          {isGift ? "Prezent" : "Zakup pakietu"}
         </p>
         <h1 className="font-display text-4xl md:text-6xl font-semibold leading-tight">
-          Wybierz pakiet i przejdź do płatności
+          {isGift ? "Podaruj pakiet lekcji" : "Wybierz pakiet i przejdź do płatności"}
         </h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Prosty proces zakupowy w czterech krokach. Wszystkie ceny brutto, w PLN.
+          {isGift
+            ? "Wybierz liczbę lekcji, podaj dane zamówienia i przejdź przez bezpieczny proces płatności."
+            : "Prosty proces zakupowy w czterech krokach. Wszystkie ceny brutto, w PLN."}
         </p>
       </header>
 
@@ -162,9 +160,7 @@ function ZakupPage() {
               onPay={handlePay}
             />
           )}
-          {step === "success" && cart && (
-            <SuccessPanel cart={cart} customer={customer} />
-          )}
+          {step === "success" && cart && <SuccessPanel cart={cart} customer={customer} />}
         </div>
 
         <aside className="lg:sticky lg:top-24">
@@ -333,7 +329,8 @@ function CartSummary({
             <div>
               <div className="font-display text-lg font-semibold">{cart.pkg.name}</div>
               <div className="text-xs text-muted-foreground mt-0.5">
-                {cart.pkg.lessonsCount} {lessonsLabel(cart.pkg.lessonsCount)} · ilość: {cart.quantity}
+                {cart.pkg.lessonsCount} {lessonsLabel(cart.pkg.lessonsCount)} · ilość:{" "}
+                {cart.quantity}
               </div>
             </div>
             <div className="text-right shrink-0">
@@ -535,10 +532,7 @@ function OrderSummary({
   acceptedPrivacy: boolean;
   setAcceptedTerms: (v: boolean) => void;
   setAcceptedPrivacy: (v: boolean) => void;
-  paymentState:
-    | { kind: "idle" }
-    | { kind: "loading" }
-    | { kind: "error"; message: string };
+  paymentState: { kind: "idle" } | { kind: "loading" } | { kind: "error"; message: string };
   onBack: () => void;
   onPay: () => void;
 }) {
@@ -604,7 +598,12 @@ function OrderSummary({
           label={
             <>
               Akceptuję{" "}
-              <Link to="/rodzic/regulamin" className="underline">
+              <Link
+                to="/rodzic/regulamin"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2 hover:text-parent"
+              >
                 regulamin serwisu
               </Link>
               . *
@@ -617,7 +616,12 @@ function OrderSummary({
           label={
             <>
               Zapoznałem/am się z{" "}
-              <Link to="/polityka-prywatnosci" className="underline">
+              <Link
+                to="/polityka-prywatnosci"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2 hover:text-parent"
+              >
                 polityką prywatności
               </Link>
               .
@@ -699,15 +703,16 @@ function SuccessPanel({ cart, customer }: { cart: CartItem; customer: CustomerDa
       </div>
       <h2 className="font-display text-3xl font-semibold">Zamówienie przyjęte</h2>
       <p className="text-muted-foreground max-w-md">
-        (Tryb demo) W produkcji w tym miejscu nastąpi przekierowanie do bramki
-        Przelewy24 na podstawie <code>paymentUrl</code> zwróconego przez backend.
+        (Tryb demo) W produkcji w tym miejscu nastąpi przekierowanie do bramki Przelewy24 na
+        podstawie <code>paymentUrl</code> zwróconego przez backend.
       </p>
       <div className="mt-2 text-sm text-muted-foreground">
         Wybrany pakiet: <span className="font-semibold text-foreground">{cart.pkg.name}</span> ·{" "}
         {formatPLN(cart.pkg.priceGross * cart.quantity)}
       </div>
       <div className="text-sm text-muted-foreground">
-        Potwierdzenie wyślemy na: <span className="font-medium text-foreground">{customer.email}</span>
+        Potwierdzenie wyślemy na:{" "}
+        <span className="font-medium text-foreground">{customer.email}</span>
       </div>
       <Link
         to="/"
