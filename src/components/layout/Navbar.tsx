@@ -44,7 +44,7 @@ const subNav: Record<ZoneKey, { to: string; label: string }[]> = {
     { to: "/rodzic/oferta", label: "Oferta" },
     { to: "/rodzic/cennik", label: "Cennik" },
     { to: "/rodzic/opinie", label: "Opinie" },
-    { to: "/rodzic/wsparcie", label: "Prezent" },
+    { to: "/prezent", label: "Prezent" },
     { to: "/rodzic/regulamin", label: "Regulamin" },
   ],
   uczen: [
@@ -100,7 +100,9 @@ export function Navbar() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-background/70" : z.dot}`} />
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-background/70" : z.dot}`}
+                />
                 {z.label}
               </Link>
             );
@@ -161,10 +163,14 @@ export function Navbar() {
                     to={z.to}
                     onClick={() => setOpen(false)}
                     className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm border border-border ${
-                      isActive ? `${z.active} font-medium border-transparent` : "text-muted-foreground"
+                      isActive
+                        ? `${z.active} font-medium border-transparent`
+                        : "text-muted-foreground"
                     }`}
                   >
-                    <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-background/70" : z.dot}`} />
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-background/70" : z.dot}`}
+                    />
                     {z.label}
                   </Link>
                 );
@@ -181,7 +187,9 @@ export function Navbar() {
                       to={l.to}
                       onClick={() => setOpen(false)}
                       className={`px-3 py-2 rounded-lg text-sm transition ${
-                        isActive ? `${zone.active} font-medium` : "text-muted-foreground hover:text-foreground"
+                        isActive
+                          ? `${zone.active} font-medium`
+                          : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       {l.label}
