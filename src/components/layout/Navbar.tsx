@@ -44,7 +44,7 @@ const subNav: Record<ZoneKey, { to: string; label: string }[]> = {
     { to: "/rodzic/oferta", label: "Oferta" },
     { to: "/rodzic/cennik", label: "Cennik" },
     { to: "/rodzic/opinie", label: "Opinie" },
-    { to: "/prezent", label: "Prezent" },
+    { to: "/rodzic/wsparcie", label: "Prezent" },
     { to: "/rodzic/regulamin", label: "Regulamin" },
   ],
   uczen: [
