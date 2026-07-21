@@ -33,6 +33,15 @@ type CartItem = {
   quantity: number;
 };
 
+const giftSupporters = [
+  "Babcia",
+  "Dziadek",
+  "Wujek",
+  "Ciocia",
+  "Rodzina",
+  "Ludzie dobrej woli wspierający naukę",
+];
+
 function ZakupPage() {
   return <PurchaseFlow />;
 }
@@ -68,7 +77,10 @@ export function PurchaseFlow({ mode = "standard" }: { mode?: "standard" | "gift"
     window.setTimeout(() => setToast(null), 2200);
     // Na mniejszych ekranach koszyk jest pod listą pakietów —
     // przewijamy do niego, żeby użytkownik od razu widział wybór.
-    if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
+    if (
+      typeof window !== "undefined" &&
+      (isGift || window.matchMedia("(max-width: 1023px)").matches)
+    ) {
       window.setTimeout(() => {
         cartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 50);
@@ -117,6 +129,43 @@ export function PurchaseFlow({ mode = "standard" }: { mode?: "standard" | "gift"
 
   const total = useMemo(() => (cart ? cart.pkg.priceGross * cart.quantity : 0), [cart]);
 
+  const stepContent = (
+    <>
+      {step === "select" && !isGift && (
+        <PackageGrid
+          packages={packages}
+          selectedId={cart?.pkg.id ?? null}
+          onSelect={selectPackage}
+        />
+      )}
+      {step === "form" && (
+        <CheckoutForm
+          customer={customer}
+          setCustomer={setCustomer}
+          errors={errors}
+          onBack={() => setStep("select")}
+          onNext={() => {
+            if (validateForm()) setStep("summary");
+          }}
+        />
+      )}
+      {step === "summary" && cart && (
+        <OrderSummary
+          cart={cart}
+          customer={customer}
+          acceptedTerms={acceptedTerms}
+          acceptedPrivacy={acceptedPrivacy}
+          setAcceptedTerms={setAcceptedTerms}
+          setAcceptedPrivacy={setAcceptedPrivacy}
+          paymentState={paymentState}
+          onBack={() => setStep("form")}
+          onPay={handlePay}
+        />
+      )}
+      {step === "success" && cart && <SuccessPanel cart={cart} customer={customer} />}
+    </>
+  );
+
   return (
     <section className="container-page py-16 md:py-24">
       <header className="max-w-3xl">
@@ -135,54 +184,53 @@ export function PurchaseFlow({ mode = "standard" }: { mode?: "standard" | "gift"
 
       <Stepper step={step} />
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px] items-start">
-        <div>
-          {step === "select" && (
-            <PackageGrid
-              packages={packages}
-              selectedId={cart?.pkg.id ?? null}
-              onSelect={selectPackage}
-            />
+      {isGift ? (
+        <div className="mt-10">
+          {step === "select" ? (
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] items-start">
+              <GiftSupporters />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-parent mb-3">
+                  Wybierz prezent
+                </p>
+                <PackageGrid
+                  packages={packages}
+                  selectedId={cart?.pkg.id ?? null}
+                  onSelect={selectPackage}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-4xl mx-auto">{stepContent}</div>
           )}
-          {step === "form" && (
-            <CheckoutForm
-              customer={customer}
-              setCustomer={setCustomer}
-              errors={errors}
-              onBack={() => setStep("select")}
-              onNext={() => {
-                if (validateForm()) setStep("summary");
-              }}
-            />
-          )}
-          {step === "summary" && cart && (
-            <OrderSummary
-              cart={cart}
-              customer={customer}
-              acceptedTerms={acceptedTerms}
-              acceptedPrivacy={acceptedPrivacy}
-              setAcceptedTerms={setAcceptedTerms}
-              setAcceptedPrivacy={setAcceptedPrivacy}
-              paymentState={paymentState}
-              onBack={() => setStep("form")}
-              onPay={handlePay}
-            />
-          )}
-          {step === "success" && cart && <SuccessPanel cart={cart} customer={customer} />}
-        </div>
 
-        <aside className="lg:sticky lg:top-24">
-          <div ref={cartRef} />
-          <CartSummary
-            cart={cart}
-            total={total}
-            step={step}
-            onGoToForm={() => setStep("form")}
-            onBackToPackages={() => setStep("select")}
-            onClear={() => setCart(null)}
-          />
-        </aside>
-      </div>
+          <div ref={cartRef} className="mt-8 max-w-4xl mx-auto scroll-mt-28">
+            <CartSummary
+              cart={cart}
+              total={total}
+              step={step}
+              onGoToForm={() => setStep("form")}
+              onBackToPackages={() => setStep("select")}
+              onClear={() => setCart(null)}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px] items-start">
+          <div>{stepContent}</div>
+          <aside className="lg:sticky lg:top-24">
+            <div ref={cartRef} />
+            <CartSummary
+              cart={cart}
+              total={total}
+              step={step}
+              onGoToForm={() => setStep("form")}
+              onBackToPackages={() => setStep("select")}
+              onClear={() => setCart(null)}
+            />
+          </aside>
+        </div>
+      )}
 
       {toast && (
         <div
@@ -194,6 +242,23 @@ export function PurchaseFlow({ mode = "standard" }: { mode?: "standard" | "gift"
         </div>
       )}
     </section>
+  );
+}
+
+function GiftSupporters() {
+  return (
+    <div className="card-surface p-6 sm:p-8">
+      <p className="text-xs uppercase tracking-[0.18em] text-parent">Dla kogo jest ta opcja?</p>
+      <h2 className="mt-2 font-display text-2xl sm:text-3xl font-semibold">Ambasadorzy Nauki</h2>
+      <ul className="mt-6 space-y-3 text-base sm:text-lg text-foreground/90">
+        {giftSupporters.map((supporter) => (
+          <li key={supporter} className="flex items-start gap-3">
+            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-parent shrink-0" />
+            <span>{supporter}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -275,7 +340,7 @@ function PackageGrid({
       </button>
 
       {expanded && (
-        <div id="package-options" className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div id="package-options" className="grid gap-5 sm:grid-cols-2">
           {packages.map((p) => {
             const active = p.id === selectedId;
             return (
