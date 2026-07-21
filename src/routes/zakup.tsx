@@ -1,6 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
-import { Check, ShoppingCart, ArrowLeft, ArrowRight, Loader2, AlertCircle } from "lucide-react";
+import {
+  Check,
+  ShoppingCart,
+  ArrowLeft,
+  ArrowRight,
+  Loader2,
+  AlertCircle,
+  ChevronDown,
+} from "lucide-react";
 import { packages, formatPLN, SELLER, type Package } from "@/lib/packages";
 import { buildOrderPayload, startPayment, type CustomerData } from "@/lib/payments";
 
@@ -234,56 +242,93 @@ function PackageGrid({
   selectedId: string | null;
   onSelect: (p: Package) => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+  const selected = packages.find((p) => p.id === selectedId) ?? null;
+
   return (
-    <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-      {packages.map((p) => {
-        const active = p.id === selectedId;
-        return (
-          <article
-            key={p.id}
-            className={`relative card-surface p-6 flex flex-col gap-4 transition ${
-              active ? "ring-2 ring-parent border-parent" : "hover:border-foreground/20"
-            }`}
-          >
-            {p.badge && (
-              <span className="absolute -top-3 left-5 px-2.5 py-1 text-xs rounded-full bg-parent text-background font-medium">
-                {p.badge}
-              </span>
-            )}
-            <header>
-              <h3 className="font-display text-2xl font-semibold">{p.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{p.shortDescription}</p>
-            </header>
-            <ul className="space-y-2 text-sm">
-              {p.features.map((f) => (
-                <li key={f} className="flex items-start gap-2">
-                  <Check className="w-4 h-4 mt-0.5 text-parent shrink-0" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto pt-2">
-              <div className="flex items-baseline justify-between">
-                <span className="font-display text-3xl font-semibold">
-                  {formatPLN(p.priceGross)}
-                </span>
-                <span className="text-xs text-muted-foreground">cena brutto</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => onSelect(p)}
-                className={`mt-4 w-full px-4 py-3 rounded-full font-display font-semibold text-base transition ${
-                  active
-                    ? "bg-parent/15 text-parent border border-parent"
-                    : "bg-foreground text-background hover:bg-foreground/90"
+    <div className="space-y-5">
+      <button
+        type="button"
+        onClick={() => setExpanded((value) => !value)}
+        aria-expanded={expanded}
+        aria-controls="package-options"
+        className="card-surface w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left transition hover:border-parent/50"
+      >
+        <span>
+          <span className="block text-xs uppercase tracking-[0.18em] text-parent">
+            {selected ? "Wybrany pakiet" : "Prezent edukacyjny"}
+          </span>
+          <span className="mt-1 block font-display text-xl sm:text-2xl font-semibold">
+            {selected ? selected.name : "Wybierz pakiet lekcji"}
+          </span>
+          <span className="mt-1 block text-sm text-muted-foreground">
+            {selected
+              ? `${formatPLN(selected.priceGross)} · kliknij, aby zmienić`
+              : `${packages.length} wariantów do wyboru`}
+          </span>
+        </span>
+        <span className="w-10 h-10 rounded-full bg-parent/15 text-parent flex items-center justify-center shrink-0">
+          <ChevronDown
+            className={`w-5 h-5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+          />
+        </span>
+      </button>
+
+      {expanded && (
+        <div id="package-options" className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {packages.map((p) => {
+            const active = p.id === selectedId;
+            return (
+              <article
+                key={p.id}
+                className={`relative card-surface p-6 flex flex-col gap-4 transition ${
+                  active ? "ring-2 ring-parent border-parent" : "hover:border-foreground/20"
                 }`}
               >
-                {active ? "W koszyku ✓" : "Dodaj do koszyka"}
-              </button>
-            </div>
-          </article>
-        );
-      })}
+                {p.badge && (
+                  <span className="absolute -top-3 left-5 px-2.5 py-1 text-xs rounded-full bg-parent text-background font-medium">
+                    {p.badge}
+                  </span>
+                )}
+                <header>
+                  <h3 className="font-display text-2xl font-semibold">{p.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{p.shortDescription}</p>
+                </header>
+                <ul className="space-y-2 text-sm">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 mt-0.5 text-parent shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-2">
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-display text-3xl font-semibold">
+                      {formatPLN(p.priceGross)}
+                    </span>
+                    <span className="text-xs text-muted-foreground">cena brutto</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onSelect(p);
+                      setExpanded(false);
+                    }}
+                    className={`mt-4 w-full px-4 py-3 rounded-full font-display font-semibold text-base transition ${
+                      active
+                        ? "bg-parent/15 text-parent border border-parent"
+                        : "bg-foreground text-background hover:bg-foreground/90"
+                    }`}
+                  >
+                    {active ? "W koszyku ✓" : "Dodaj do koszyka"}
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
