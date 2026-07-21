@@ -23,7 +23,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/prezent" className="hover:text-foreground">
+              <Link to="/rodzic/wsparcie" className="hover:text-foreground">
                 Prezent
               </Link>
             </li>
