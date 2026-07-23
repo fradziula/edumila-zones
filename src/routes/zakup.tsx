@@ -340,56 +340,42 @@ function PackageGrid({
       </button>
 
       {expanded && (
-        <div id="package-options" className="grid gap-5 sm:grid-cols-2">
-          {packages.map((p) => {
+        <div id="package-options" className="card-surface overflow-hidden">
+          {packages.map((p, index) => {
             const active = p.id === selectedId;
             return (
-              <article
+              <button
                 key={p.id}
-                className={`relative card-surface p-6 flex flex-col gap-4 transition ${
-                  active ? "ring-2 ring-parent border-parent" : "hover:border-foreground/20"
+                type="button"
+                onClick={() => {
+                  onSelect(p);
+                  setExpanded(false);
+                }}
+                className={`w-full px-4 py-3.5 sm:px-5 flex items-center justify-between gap-4 text-left transition ${
+                  index < packages.length - 1 ? "border-b border-border" : ""
+                } ${
+                  active
+                    ? "bg-parent/15 text-parent"
+                    : "hover:bg-surface-2/70 hover:text-foreground"
                 }`}
               >
-                {p.badge && (
-                  <span className="absolute -top-3 left-5 px-2.5 py-1 text-xs rounded-full bg-parent text-background font-medium">
-                    {p.badge}
-                  </span>
-                )}
-                <header>
-                  <h3 className="font-display text-2xl font-semibold">{p.name}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{p.shortDescription}</p>
-                </header>
-                <ul className="space-y-2 text-sm">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 mt-0.5 text-parent shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-2">
-                  <div className="flex items-baseline justify-between">
-                    <span className="font-display text-3xl font-semibold">
-                      {formatPLN(p.priceGross)}
+                <span className="min-w-0">
+                  <span className="font-display text-base sm:text-lg font-semibold">{p.name}</span>
+                  {p.badge && (
+                    <span className="ml-2 inline-flex rounded-full bg-parent/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-parent">
+                      {p.badge}
                     </span>
-                    <span className="text-xs text-muted-foreground">cena brutto</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onSelect(p);
-                      setExpanded(false);
-                    }}
-                    className={`mt-4 w-full px-4 py-3 rounded-full font-display font-semibold text-base transition ${
-                      active
-                        ? "bg-parent/15 text-parent border border-parent"
-                        : "bg-foreground text-background hover:bg-foreground/90"
-                    }`}
-                  >
-                    {active ? "W koszyku ✓" : "Dodaj do koszyka"}
-                  </button>
-                </div>
-              </article>
+                  )}
+                </span>
+                <span className="flex items-center gap-2 shrink-0">
+                  <span className="font-semibold text-foreground">{formatPLN(p.priceGross)}</span>
+                  {active && (
+                    <span className="w-5 h-5 rounded-full bg-parent text-background flex items-center justify-center">
+                      <Check className="w-3 h-3" />
+                    </span>
+                  )}
+                </span>
+              </button>
             );
           })}
         </div>
@@ -431,7 +417,7 @@ function CartSummary({
 
       {!cart ? (
         <div className="mt-5 text-sm text-muted-foreground">
-          Koszyk jest pusty. Wybierz jeden z 12 pakietów po lewej, aby kontynuować.
+          Koszyk jest pusty. Wybierz pakiet powyżej, aby kontynuować.
         </div>
       ) : (
         <>
