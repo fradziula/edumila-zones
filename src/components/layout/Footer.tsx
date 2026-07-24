@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { AtSign, Mail, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone } from "lucide-react";
 
 export function Footer() {
   return (
@@ -52,6 +52,10 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Mail size={14} /> edumila.kontakt@gmail.com
+            </li>
+            <li className="flex items-start gap-2">
+              <MapPin size={14} className="mt-0.5 shrink-0" />
+              <span>ul. Pniaki 190, 34-124 Klecza Dolna</span>
             </li>
             <li className="flex items-center gap-2">
               <AtSign size={14} /> @korepetycje_edumila
